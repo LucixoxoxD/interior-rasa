@@ -311,6 +311,60 @@
     opacity: 0.45;
     text-align: right;
   }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .studio-hero { padding: 160px 40px 80px; }
+    .studio-philosophy { padding: 100px 40px; }
+    .studio-stats { padding: 60px 40px; }
+    .studio-team { padding: 100px 40px; }
+    .studio-timeline { padding: 100px 40px; }
+    .studio-press { padding: 80px 40px; }
+    .studio-awards { padding: 80px 40px; }
+  }
+  @media (max-width: 768px) {
+    .studio-hero { grid-template-columns: 1fr; gap: 40px; padding: 140px 32px 64px; min-height: unset; }
+    .studio-hero::after { font-size: 200px; right: -10px; bottom: -40px; }
+    .studio-philosophy { grid-template-columns: 1fr; gap: 48px; padding: 80px 32px; }
+    .studio-philosophy-img { position: static; aspect-ratio: 16/10; }
+    .studio-stats { grid-template-columns: 1fr 1fr; gap: 32px; padding: 56px 32px; }
+    .studio-team { padding: 80px 32px; }
+    .studio-team h2 { margin-bottom: 48px; }
+    .team-grid { grid-template-columns: 1fr 1fr; gap: 40px 28px; }
+    .studio-timeline { padding: 80px 32px; }
+    .studio-press { padding: 64px 32px; }
+    .press-grid { grid-template-columns: 1fr 1fr; }
+    .studio-awards { padding: 64px 32px; }
+    .award-row { grid-template-columns: 80px 1fr; gap: 16px; }
+    .award-body { grid-column: 2; text-align: left; }
+  }
+  @media (max-width: 640px) {
+    .studio-hero { padding: 110px 20px 52px; }
+    .studio-hero::after { font-size: 120px; right: -5px; bottom: -20px; }
+    .studio-philosophy { padding: 64px 20px; }
+    .studio-stats { padding: 48px 20px; gap: 24px; }
+    .studio-stat-num { font-size: 48px; }
+    .studio-team { padding: 64px 20px; }
+    .team-grid { grid-template-columns: 1fr; gap: 48px; }
+    .studio-timeline { padding: 64px 20px; }
+    .timeline-list { grid-template-columns: 80px 1fr; }
+    .timeline-content { padding-left: 24px; }
+    .studio-press { padding: 56px 20px; }
+    .press-grid { grid-template-columns: 1fr; }
+    .press-item { padding: 24px; }
+    .studio-awards { padding: 56px 20px; }
+    .award-row { grid-template-columns: 1fr; gap: 6px; padding: 18px 0; }
+    .award-body { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    .studio-hero { padding: 96px 16px 48px; }
+    .studio-philosophy { padding: 56px 16px; }
+    .studio-stats { padding: 40px 16px; }
+    .studio-team { padding: 56px 16px; }
+    .studio-timeline { padding: 56px 16px; }
+    .studio-press { padding: 48px 16px; }
+    .studio-awards { padding: 48px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -324,7 +378,19 @@
     <li><a href="journal.html">Journal</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Inquire</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu"><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-nav">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Work</a>
+    <a href="studio.html" class="active">Studio</a>
+    <a href="journal.html">Journal</a>
+    <a href="contact.html">Inquire</a>
+  </nav>
+  <div class="mobile-menu-footer"><span>Rasa Design Studio</span><span>New Delhi, 2026</span></div>
+</div>
 
 <section class="studio-hero">
   <div class="studio-hero-left">
@@ -346,7 +412,7 @@
     <p>Our interiors age well. We design them to. The patina of use — the brass that darkens, the lime plaster that breathes, the teak that acquires a history — is not an accident. It is the entire point. A house is not a showroom. It is a record of a life being lived.</p>
   </div>
   <div class="studio-philosophy-img fade-up">
-    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&auto=format&fit=crop" alt="Studio philosophy">
+    <img loading="lazy" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&auto=format&fit=crop" alt="Studio philosophy">
   </div>
 </section>
 
@@ -375,7 +441,7 @@
   <div class="team-grid">
     <div class="team-member fade-up">
       <div class="team-portrait">
-        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=85&auto=format&fit=crop" alt="Tara Mehrotra">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=85&auto=format&fit=crop" alt="Tara Mehrotra">
       </div>
       <div class="team-name">Tara Mehrotra</div>
       <div class="team-role">Founder &amp; Principal Designer</div>
@@ -383,7 +449,7 @@
     </div>
     <div class="team-member fade-up">
       <div class="team-portrait">
-        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=85&auto=format&fit=crop" alt="Ishaan Rao">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=85&auto=format&fit=crop" alt="Ishaan Rao">
       </div>
       <div class="team-name">Ishaan Rao</div>
       <div class="team-role">Design Director</div>
@@ -391,7 +457,7 @@
     </div>
     <div class="team-member fade-up">
       <div class="team-portrait">
-        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&q=85&auto=format&fit=crop" alt="Priya Subramaniam">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&q=85&auto=format&fit=crop" alt="Priya Subramaniam">
       </div>
       <div class="team-name">Priya Subramaniam</div>
       <div class="team-role">Senior Designer — South India</div>
@@ -535,6 +601,27 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    const mainNav = document.getElementById('main-nav');
+    hamburger.addEventListener('click', () => {
+      const opening = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      mainNav.classList.toggle('menu-open', opening);
+      document.body.style.overflow = opening ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      mainNav.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }));
+  }
 </script>
 </body>
 </html>
+
