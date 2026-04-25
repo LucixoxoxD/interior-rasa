@@ -310,6 +310,43 @@
     color: var(--stone);
     opacity: 0.6;
   }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .contact-hero { padding: 160px 40px 64px; }
+    .inquiry-process { padding: 48px 40px; }
+    .contact-main { padding: 80px 40px; }
+    .contact-cities { padding: 64px 40px; }
+  }
+  @media (max-width: 768px) {
+    .contact-hero { grid-template-columns: 1fr; gap: 32px; padding: 140px 32px 56px; min-height: unset; }
+    .inquiry-process { grid-template-columns: 1fr 1fr; gap: 24px; padding: 48px 32px; }
+    .contact-main { grid-template-columns: 1fr; gap: 56px; padding: 64px 32px; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-cities { padding: 56px 32px; }
+    .cities-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  }
+  @media (max-width: 640px) {
+    .contact-hero { padding: 110px 20px 48px; }
+    .inquiry-process { grid-template-columns: 1fr 1fr; padding: 40px 20px; gap: 20px; }
+    .contact-main { padding: 56px 20px; gap: 48px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { padding: 12px 0; min-height: 44px; }
+    .form-group textarea { min-height: 80px; }
+    .form-submit { min-height: 52px; }
+    .wa-cta { min-height: 52px; padding: 14px 24px; }
+    .office-map-placeholder { aspect-ratio: 4/3; }
+    .contact-cities { padding: 48px 20px; }
+    .cities-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .contact-hero { padding: 96px 16px 40px; }
+    .inquiry-process { grid-template-columns: 1fr; padding: 36px 16px; gap: 20px; }
+    .contact-main { padding: 48px 16px; }
+    .contact-cities { padding: 40px 16px; }
+    .cities-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -323,7 +360,19 @@
     <li><a href="journal.html">Journal</a></li>
   </ul>
   <a href="contact.html" class="nav-cta" style="opacity:1;">Inquire</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu"><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-nav">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Work</a>
+    <a href="studio.html">Studio</a>
+    <a href="journal.html">Journal</a>
+    <a href="contact.html" class="active">Inquire</a>
+  </nav>
+  <div class="mobile-menu-footer"><span>Rasa Design Studio</span><span>New Delhi, 2026</span></div>
+</div>
 
 <section class="contact-hero">
   <h1>Begin<br>a conversation.</h1>
@@ -520,6 +569,25 @@
     nav.style.backdropFilter = atTop ? '' : 'blur(12px)';
     nav.style.color = atTop ? 'var(--ivory)' : 'var(--indigo)';
   }, { passive: true });
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      const opening = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      nav.classList.toggle('menu-open', opening);
+      document.body.style.overflow = opening ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      nav.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }));
+  }
 </script>
 </body>
 </html>
