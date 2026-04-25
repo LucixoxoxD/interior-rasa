@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — RASA Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .journal-hero {
+    padding: 180px 56px 80px;
+    border-bottom: 1px solid var(--linen);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .journal-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+  }
+  .journal-hero p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #3A3028;
+    max-width: 420px;
+    text-wrap: pretty;
+    align-self: end;
+  }
+
+  .journal-featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--linen);
+    text-decoration: none;
+    color: inherit;
+  }
+  .featured-img {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .featured-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.88);
+    transition: transform 0.7s ease;
+    display: block;
+  }
+  .journal-featured:hover .featured-img img { transform: scale(1.04); }
+  .featured-content {
+    padding: 72px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--linen);
+  }
+  .featured-tag {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    text-wrap: pretty;
+    color: var(--indigo);
+    transition: color 0.3s;
+  }
+  .journal-featured:hover .featured-title { color: var(--terracotta); }
+  .featured-excerpt {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3A3028;
+    text-wrap: pretty;
+    max-width: 440px;
+  }
+  .featured-meta {
+    margin-top: 36px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .meta-date {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+    opacity: 0.6;
+  }
+  .meta-read {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+    opacity: 0.45;
+  }
+  .meta-sep { width: 20px; height: 1px; background: var(--smoke); }
+
+  .journal-grid-section {
+    padding: 80px 56px 120px;
+  }
+  .journal-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--linen);
+  }
+  .jf-btn {
+    background: none;
+    border: 1px solid var(--linen);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    padding: 8px 18px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.3s;
+  }
+  .jf-btn:hover, .jf-btn.active {
+    background: var(--indigo);
+    color: var(--ivory);
+    border-color: var(--indigo);
+    opacity: 1;
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 32px;
+  }
+  .journal-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .journal-card-img {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .journal-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85);
+    transition: transform 0.7s ease;
+  }
+  .journal-card:hover .journal-card-img img { transform: scale(1.05); }
+  .card-tag {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    text-wrap: pretty;
+    transition: color 0.3s;
+  }
+  .journal-card:hover .card-title { color: var(--terracotta); }
+  .card-excerpt {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: #3A3028;
+    text-wrap: pretty;
+    margin-bottom: 16px;
+  }
+  .card-date {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--stone);
+    opacity: 0.5;
+  }
+
+  .journal-newsletter {
+    background: var(--linen);
+    padding: 100px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .journal-newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .journal-newsletter p {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3A3028;
+    margin-top: 16px;
+    text-wrap: pretty;
+  }
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .newsletter-form input {
+    border: none;
+    border-bottom: 1px solid var(--stone);
+    background: transparent;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--indigo);
+    padding: 12px 0;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .newsletter-form input::placeholder { color: var(--stone); opacity: 0.5; }
+  .newsletter-form input:focus { border-color: var(--brass); }
+  .newsletter-submit {
+    margin-top: 8px;
+    background: var(--indigo);
+    border: none;
+    color: var(--ivory);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.3s;
+  }
+  .newsletter-submit:hover { background: var(--terracotta); }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav always-dark" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html" class="active">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<section class="journal-hero">
+  <h1>Notes on<br><em style="font-style:italic; color:var(--stone);">Making</em></h1>
+  <p>Occasional writing on craft, materials, projects in progress, and the slow practice of attending to space. Updated when we have something worth saying — never more often than that.</p>
+</section>
+
+<a href="#" class="journal-featured">
+  <div class="featured-img">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop" alt="On the intelligence of natural stone">
+  </div>
+  <div class="featured-content">
+    <span class="featured-tag">§ Materials — Featured Essay</span>
+    <div class="featured-title">On the intelligence of natural stone: why kota, dholpur, and shahabad think for themselves</div>
+    <p class="featured-excerpt">Every natural stone has a memory. Cut from sedimentary rock formed over tens of millions of years, it carries within it a record of pressure, heat, and mineral chemistry that no manufactured surface can replicate. When we specify Kota stone for a floor, we are not making an aesthetic choice. We are making a thermodynamic one.</p>
+    <div class="featured-meta">
+      <span class="meta-date">March 12, 2026</span>
+      <span class="meta-sep"></span>
+      <span class="meta-read">8 min read</span>
+    </div>
+  </div>
+</a>
+
+<section class="journal-grid-section">
+  <div class="journal-filter">
+    <button class="jf-btn active">All</button>
+    <button class="jf-btn">Materials</button>
+    <button class="jf-btn">Craft</button>
+    <button class="jf-btn">Process</button>
+    <button class="jf-btn">Projects</button>
+    <button class="jf-btn">Thinking</button>
+  </div>
+
+  <div class="journal-grid">
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=800&q=85&auto=format&fit=crop" alt="Kutch">
+      </div>
+      <span class="card-tag">Craft</span>
+      <div class="card-title">Six days in Kutch: what the weavers taught us about patience</div>
+      <p class="card-excerpt">We visited three workshops in Bhuj to commission textiles for the Bandra project. What we found was a precision that no machine can simulate.</p>
+      <span class="card-date">February 4, 2026</span>
+    </a>
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85&auto=format&fit=crop" alt="Brass">
+      </div>
+      <span class="card-tag">Materials</span>
+      <div class="card-title">In defence of unlacquered brass: a material that earns its keep</div>
+      <p class="card-excerpt">Most designers specify lacquered brass to avoid patination. We specify unlacquered because the patination is precisely the point — it is proof that someone lives here.</p>
+      <span class="card-date">January 20, 2026</span>
+    </a>
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=85&auto=format&fit=crop" alt="Light">
+      </div>
+      <span class="card-tag">Thinking</span>
+      <div class="card-title">Indian light is not white: why the Scandinavian palette fails on the subcontinent</div>
+      <p class="card-excerpt">The design vocabulary that works under Nordic grey skies is systematically wrong in India, where afternoon light is golden, equatorial, and merciless toward cool whites.</p>
+      <span class="card-date">December 8, 2025</span>
+    </a>
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&q=85&auto=format&fit=crop" alt="Goa">
+      </div>
+      <span class="card-tag">Projects</span>
+      <div class="card-title">How a house in Assagao taught us to design with the monsoon, not against it</div>
+      <p class="card-excerpt">The Goa Retreat was the first project in which we used the monsoon season as an active design parameter — planning ventilation, drainage, and material selection around six months of heavy rain.</p>
+      <span class="card-date">November 3, 2025</span>
+    </a>
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&auto=format&fit=crop" alt="Lime plaster">
+      </div>
+      <span class="card-tag">Materials</span>
+      <div class="card-title">The slow return of lime: why the most ancient wall finish is also the most contemporary</div>
+      <p class="card-excerpt">Lime plaster breathes. It regulates humidity, sequesters carbon, and improves with age. It is also, by most measures, more expensive and difficult to apply than gypsum. Which is exactly why we specify it.</p>
+      <span class="card-date">October 14, 2025</span>
+    </a>
+
+    <a href="#" class="journal-card fade-up">
+      <div class="journal-card-img">
+        <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=85&auto=format&fit=crop" alt="Process">
+      </div>
+      <span class="card-tag">Process</span>
+      <div class="card-title">On why we do not begin with a mood board</div>
+      <p class="card-excerpt">The mood board has become the default opening move of interior design. We find it counterproductive — it privileges image over argument and shorthand over understanding.</p>
+      <span class="card-date">September 2, 2025</span>
+    </a>
+
+  </div>
+</section>
+
+<section class="journal-newsletter">
+  <div>
+    <span class="section-label">§ Stay in touch</span>
+    <h2>New writing, when it is ready.</h2>
+    <p>We publish infrequently and with care. No newsletters, no roundups — only occasional long-form essays when we have something worth articulating. Subscribe and we will write directly to you.</p>
+  </div>
+  <form class="newsletter-form" onsubmit="return false;">
+    <input type="text" placeholder="Your name">
+    <input type="email" placeholder="Email address">
+    <button class="newsletter-submit" type="submit">Subscribe</button>
+  </form>
+</section>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col"><span class="footer-col-label">Studio</span><p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p></div>
+    <div class="footer-col"><span class="footer-col-label">Navigation</span><ul><li><a href="index.html">Home</a></li><li><a href="projects.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="journal.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Contact</span><ul><li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li><li><a href="https://wa.me/919810000000">WhatsApp</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Follow</span><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Pinterest</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal"><li><a href="#">Privacy</a></li></ul>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60 ? 'rgba(243,237,226,0.92)' : 'transparent';
+    nav.style.backdropFilter = window.scrollY > 60 ? 'blur(12px)' : '';
+  }, { passive: true });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  document.querySelectorAll('.jf-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.jf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

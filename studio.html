@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio — RASA Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .studio-hero {
+    min-height: 70vh;
+    padding: 180px 56px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    border-bottom: 1px solid var(--linen);
+    position: relative;
+    overflow: hidden;
+  }
+  .studio-hero::after {
+    content: 'रस';
+    font-family: 'Mukta', sans-serif;
+    font-size: 320px;
+    font-weight: 300;
+    color: var(--linen);
+    position: absolute;
+    right: -20px;
+    bottom: -60px;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .studio-hero-left { position: relative; z-index: 1; }
+  .studio-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 6.5vw, 96px);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    margin-top: 24px;
+  }
+  .studio-hero-right {
+    position: relative; z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .studio-hero-right p {
+    font-size: 17px;
+    line-height: 1.85;
+    color: #3A3028;
+    text-wrap: pretty;
+    max-width: 480px;
+  }
+  .studio-hero-right p + p { margin-top: 20px; }
+
+  .studio-philosophy {
+    padding: 120px 56px;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 100px;
+    align-items: start;
+  }
+  .studio-philosophy-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 40px;
+    text-wrap: pretty;
+  }
+  .studio-philosophy-text p {
+    font-size: 16px;
+    line-height: 1.95;
+    color: #3A3028;
+    text-wrap: pretty;
+    max-width: 560px;
+  }
+  .studio-philosophy-text p + p { margin-top: 22px; }
+  .studio-philosophy-img {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    position: sticky;
+    top: 120px;
+  }
+  .studio-philosophy-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85);
+    transition: transform 6s ease;
+  }
+  .studio-philosophy-img:hover img { transform: scale(1.04); }
+
+  .studio-stats {
+    background: var(--indigo);
+    padding: 72px 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .studio-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 64px;
+    color: var(--ivory);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .studio-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.5;
+    margin-top: 10px;
+  }
+
+  .studio-team {
+    padding: 120px 56px;
+    border-bottom: 1px solid var(--linen);
+  }
+  .studio-team h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 3.8vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 72px;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 40px;
+  }
+  .team-portrait {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--linen);
+    margin-bottom: 24px;
+  }
+  .team-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(15%) saturate(0.85);
+    transition: transform 0.7s ease, filter 0.5s;
+  }
+  .team-member:hover .team-portrait img {
+    transform: scale(1.04);
+    filter: grayscale(0%) saturate(0.9);
+  }
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: 0.01em;
+    margin-bottom: 6px;
+  }
+  .team-role {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 14px;
+  }
+  .team-bio {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: #3A3028;
+    text-wrap: pretty;
+  }
+
+  .studio-timeline {
+    padding: 120px 56px;
+    background: var(--linen);
+  }
+  .studio-timeline h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 50px);
+    letter-spacing: -0.01em;
+    margin-bottom: 72px;
+  }
+  .timeline-list {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+  }
+  .timeline-item { display: contents; }
+  .timeline-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--brass);
+    letter-spacing: 0.04em;
+    padding: 28px 0;
+    border-top: 1px solid var(--smoke);
+  }
+  .timeline-content {
+    padding: 28px 0 28px 48px;
+    border-top: 1px solid var(--smoke);
+  }
+  .timeline-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .timeline-content p {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: #3A3028;
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .studio-press {
+    padding: 100px 56px;
+    border-top: 1px solid var(--linen);
+  }
+  .studio-press h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 50px);
+    letter-spacing: -0.01em;
+    margin-bottom: 56px;
+  }
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .press-item {
+    border: 1px solid var(--linen);
+    padding: 36px;
+    transition: border-color 0.3s;
+    cursor: default;
+  }
+  .press-item:hover { border-color: var(--brass); }
+  .press-pub {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .press-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.35;
+    color: var(--indigo);
+    margin-bottom: 12px;
+    text-wrap: pretty;
+  }
+  .press-date {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+    opacity: 0.55;
+  }
+
+  .studio-awards {
+    padding: 100px 56px;
+    background: var(--indigo);
+  }
+  .studio-awards h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 50px);
+    color: var(--ivory);
+    letter-spacing: -0.01em;
+    margin-bottom: 56px;
+  }
+  .award-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 200px;
+    gap: 32px;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--ivory);
+  }
+  .award-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--brass);
+    letter-spacing: 0.08em;
+  }
+  .award-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 20px;
+    letter-spacing: 0.01em;
+  }
+  .award-body {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.45;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav always-dark" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Work</a></li>
+    <li><a href="studio.html" class="active">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<section class="studio-hero">
+  <div class="studio-hero-left">
+    <span class="section-label">§ The Studio</span>
+    <h1>A place,<br>a practice,<br><em style="font-style:italic; color:var(--stone);">a point of view.</em></h1>
+  </div>
+  <div class="studio-hero-right">
+    <p>Rasa was founded in New Delhi in 2008 by Tara Mehrotra, with the conviction that Indian interiors deserved better than either faithful heritage reproduction or unrooted modernism.</p>
+    <p>Eighteen years later, the studio operates from Mehrauli with a team of twelve — architects, material researchers, and craftspeople in close collaboration. We work Pan-India and on select international commissions for clients who understand that a home of consequence takes time.</p>
+  </div>
+</section>
+
+<section class="studio-philosophy">
+  <div class="studio-philosophy-text">
+    <span class="section-label">§ Philosophy</span>
+    <h2>We do not decorate. We make arguments about how to live.</h2>
+    <p>Every project at Rasa begins with a question that is not about aesthetics: how does this family move through their day? What do they hear in the morning? What do they want to feel when they return from work? The answers to these questions are the brief. The material and spatial decisions that follow are attempts to answer them precisely.</p>
+    <p>We work with Indian craft not as a gesture toward culture but because it is the most intelligent response to the Indian climate, the Indian light, and the Indian relationship to domestic life. A Rajasthani jali is not decorative — it is a ventilation strategy and a light-diffuser that no manufactured product equals. A handwoven durrie is not sentimental — it is washable, repairable, and improves with age.</p>
+    <p>Our interiors age well. We design them to. The patina of use — the brass that darkens, the lime plaster that breathes, the teak that acquires a history — is not an accident. It is the entire point. A house is not a showroom. It is a record of a life being lived.</p>
+  </div>
+  <div class="studio-philosophy-img fade-up">
+    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&auto=format&fit=crop" alt="Studio philosophy">
+  </div>
+</section>
+
+<div class="studio-stats">
+  <div class="studio-stat">
+    <div class="studio-stat-num">2008</div>
+    <div class="studio-stat-label">Year founded</div>
+  </div>
+  <div class="studio-stat">
+    <div class="studio-stat-num">74</div>
+    <div class="studio-stat-label">Completed projects</div>
+  </div>
+  <div class="studio-stat">
+    <div class="studio-stat-num">12</div>
+    <div class="studio-stat-label">Studio team</div>
+  </div>
+  <div class="studio-stat">
+    <div class="studio-stat-num">6</div>
+    <div class="studio-stat-label">Cities active</div>
+  </div>
+</div>
+
+<section class="studio-team">
+  <span class="section-label">§ The Team</span>
+  <h2>Small by design.</h2>
+  <div class="team-grid">
+    <div class="team-member fade-up">
+      <div class="team-portrait">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=85&auto=format&fit=crop" alt="Tara Mehrotra">
+      </div>
+      <div class="team-name">Tara Mehrotra</div>
+      <div class="team-role">Founder &amp; Principal Designer</div>
+      <p class="team-bio">Trained at SPA New Delhi and the Architectural Association, London. Returned to practice in India in 2006 after two years with Adjaye Associates. Founded Rasa in 2008. Her work has been exhibited at the India Design Forum and the Kochi Biennale.</p>
+    </div>
+    <div class="team-member fade-up">
+      <div class="team-portrait">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=85&auto=format&fit=crop" alt="Ishaan Rao">
+      </div>
+      <div class="team-name">Ishaan Rao</div>
+      <div class="team-role">Design Director</div>
+      <p class="team-bio">Architect and interior designer from Bengaluru. Specialises in material research and the documentation of Indian craft traditions. Has spent six months in Kutch, documenting resist-dye textile processes. Leads all hospitality projects.</p>
+    </div>
+    <div class="team-member fade-up">
+      <div class="team-portrait">
+        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&q=85&auto=format&fit=crop" alt="Priya Subramaniam">
+      </div>
+      <div class="team-name">Priya Subramaniam</div>
+      <div class="team-role">Senior Designer — South India</div>
+      <p class="team-bio">Based in Bengaluru. Manages all projects in South India with particular expertise in the Dravidian vernacular — Chettinad stone, Athangudi tile, and the spatial logic of the traditional Brahmin agraharam. Trained at CEPT Ahmedabad.</p>
+    </div>
+  </div>
+</section>
+
+<section class="studio-timeline">
+  <span class="section-label">§ Practice History</span>
+  <h2>Eighteen years, one direction.</h2>
+  <div class="timeline-list">
+    <div class="timeline-item">
+      <div class="timeline-year">2008</div>
+      <div class="timeline-content">
+        <h3>Studio founded in Mehrauli</h3>
+        <p>Tara Mehrotra establishes Rasa from a studio in the Mehrauli Archaeological Park, with two staff and a single residential commission in Defence Colony.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2012</div>
+      <div class="timeline-content">
+        <h3>First farmhouse commission — Aravallis</h3>
+        <p>Completion of a weekend farmhouse near Manesar marks the studio's first significant departure from urban residential work. The project is featured in AD India.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-content">
+        <h3>South India expansion; Bengaluru office</h3>
+        <p>Priya Subramaniam joins as lead for South India. The studio takes on its first Bengaluru residential project — a garden house in Whitefield — and an ongoing relationship with Karnataka clients begins.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2018</div>
+      <div class="timeline-content">
+        <h3>First hospitality commission — Chambers at Lodhi</h3>
+        <p>A private members' dining room in New Delhi's Lodhi neighbourhood. The project earns the studio a mention in the Financial Times's 'How to Spend It' supplement.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2023</div>
+      <div class="timeline-content">
+        <h3>House on Aurangzeb Road — AD India cover</h3>
+        <p>The studio's most significant residential project to date, published across six pages in the March 2023 issue of Architectural Digest India. A milestone that reaffirms the studio's editorial presence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="studio-press">
+  <span class="section-label">§ Press &amp; Publication</span>
+  <h2>What others have written.</h2>
+  <div class="press-grid">
+    <div class="press-item fade-up">
+      <span class="press-pub">AD India</span>
+      <div class="press-headline">"The house on Aurangzeb Road is one of the finest residential interiors produced in India this decade."</div>
+      <div class="press-date">March 2023 — Cover Feature</div>
+    </div>
+    <div class="press-item fade-up">
+      <span class="press-pub">Elle Décor India</span>
+      <div class="press-headline">"Rasa understands that Indian materials are not a nod to the past but an argument for the present."</div>
+      <div class="press-date">May 2023 — Interiors Special</div>
+    </div>
+    <div class="press-item fade-up">
+      <span class="press-pub">Vogue India</span>
+      <div class="press-headline">"The Bandra Apartment is a masterclass in restraint — every surface is considered, nothing is superfluous."</div>
+      <div class="press-date">January 2024 — Living Issue</div>
+    </div>
+    <div class="press-item fade-up">
+      <span class="press-pub">Platform Magazine</span>
+      <div class="press-headline">"Tara Mehrotra is among the most rigorous design thinkers currently practising in India."</div>
+      <div class="press-date">Issue 14, 2023</div>
+    </div>
+    <div class="press-item fade-up">
+      <span class="press-pub">Beautiful Homes</span>
+      <div class="press-headline">"The Goa Retreat demonstrates a rare fluency with the Portuguese colonial vernacular and the Indian tropical climate."</div>
+      <div class="press-date">Winter 2022</div>
+    </div>
+    <div class="press-item fade-up">
+      <span class="press-pub">Goodhomes</span>
+      <div class="press-headline">"18 Indian studios changing the face of luxury residential design."</div>
+      <div class="press-date">August 2022 — Annual List</div>
+    </div>
+  </div>
+</section>
+
+<section class="studio-awards">
+  <span class="section-label" style="color:var(--smoke); opacity:0.5;">§ Recognition</span>
+  <h2>Awards &amp; recognition.</h2>
+  <div class="awards-list">
+    <div class="award-row">
+      <span class="award-year">2023</span>
+      <span class="award-name">Residential Interior of the Year — House on Aurangzeb Road</span>
+      <span class="award-body">India Design Forum</span>
+    </div>
+    <div class="award-row">
+      <span class="award-year">2023</span>
+      <span class="award-name">Best Use of Natural Materials</span>
+      <span class="award-body">Elle Décor Grand Prix</span>
+    </div>
+    <div class="award-row">
+      <span class="award-year">2022</span>
+      <span class="award-name">Outstanding Hospitality Design — Chambers at Lodhi</span>
+      <span class="award-body">Hospitality Design Awards India</span>
+    </div>
+    <div class="award-row">
+      <span class="award-year">2021</span>
+      <span class="award-name">Emerging Studio of the Decade</span>
+      <span class="award-body">AD India 100 Architects</span>
+    </div>
+    <div class="award-row">
+      <span class="award-year">2019</span>
+      <span class="award-name">Excellence in Craft Integration</span>
+      <span class="award-body">Craftmark India</span>
+    </div>
+  </div>
+</section>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col"><span class="footer-col-label">Studio</span><p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p></div>
+    <div class="footer-col"><span class="footer-col-label">Navigation</span><ul><li><a href="index.html">Home</a></li><li><a href="projects.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="journal.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Contact</span><ul><li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li><li><a href="mailto:commissions@rasastudio.in">commissions@rasastudio.in</a></li><li><a href="https://wa.me/919810000000">WhatsApp</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Follow</span><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Pinterest</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal"><li><a href="#">Privacy</a></li></ul>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60 ? 'rgba(243,237,226,0.92)' : 'transparent';
+    nav.style.backdropFilter = window.scrollY > 60 ? 'blur(12px)' : '';
+  }, { passive: true });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

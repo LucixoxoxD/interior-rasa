@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RASA — Interior Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ivory:      #F3EDE2;
+    --linen:      #E6D9C6;
+    --terracotta: #B85C38;
+    --indigo:     #1B2A45;
+    --brass:      #9E7840;
+    --stone:      #8B7B6A;
+    --smoke:      #C8BEB4;
+    --dark:       #0F1A0D;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--indigo);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 56px;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  nav.light { color: var(--ivory); }
+  nav.dark  {
+    color: var(--indigo);
+    background: rgba(243,237,226,0.88);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .nav-logo .deva {
+    font-family: 'Mukta', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    opacity: 0.6;
+    position: relative;
+    top: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.75;
+    transition: opacity 0.3s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { opacity: 1; }
+  .nav-links a.active {
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  .nav-cta {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.85;
+    border: 1px solid currentColor;
+    padding: 9px 22px;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .nav-cta:hover { opacity: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1800&q=85&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.04);
+    transition: transform 8s ease-out;
+  }
+  .hero-bg.loaded { transform: scale(1); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(15, 12, 8, 0.72) 0%,
+      rgba(15, 12, 8, 0.18) 50%,
+      rgba(15, 12, 8, 0.04) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 56px 68px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 7.5vw, 110px);
+    line-height: 0.92;
+    color: var(--ivory);
+    letter-spacing: -0.01em;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: rgba(243,237,226,0.72);
+  }
+
+  .hero-aside {
+    color: var(--ivory);
+    max-width: 240px;
+    padding-bottom: 8px;
+  }
+  .hero-aside p {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    opacity: 0.65;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+  .hero-aside .scroll-hint {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--ivory);
+    display: block;
+  }
+
+  /* ─── SECTION LABELS ─── */
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone);
+    display: block;
+    margin-bottom: 32px;
+  }
+
+  /* ─── PHILOSOPHY ─── */
+  #philosophy {
+    padding: 140px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .philosophy-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 3.6vw, 52px);
+    line-height: 1.18;
+    margin-bottom: 36px;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .philosophy-text p {
+    font-size: 15px;
+    line-height: 1.95;
+    color: #3A3028;
+    max-width: 480px;
+    text-wrap: pretty;
+  }
+  .philosophy-text .brass-rule {
+    width: 48px;
+    height: 1px;
+    background: var(--brass);
+    margin: 40px 0;
+  }
+  .philosophy-text .stat-row {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--indigo);
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 6px;
+  }
+
+  .philosophy-image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .philosophy-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 6s ease-out;
+  }
+  .philosophy-image:hover img { transform: scale(1.04); }
+  .philosophy-image::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 60%;
+    height: 60%;
+    border-bottom: 1px solid var(--brass);
+    border-right: 1px solid var(--brass);
+    opacity: 0.4;
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects {
+    padding: 100px 56px 140px;
+    background: var(--indigo);
+  }
+
+  #projects .section-label { color: var(--smoke); opacity: 0.6; }
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .projects-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(38px, 4vw, 58px);
+    color: var(--ivory);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .projects-header a {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    text-decoration: none;
+    opacity: 0.6;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 3px;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
+  .projects-header a:hover { opacity: 1; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+  }
+
+  .project-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .project-card:nth-child(1) { grid-column: span 7; }
+  .project-card:nth-child(2) { grid-column: span 5; }
+  .project-card:nth-child(3) { grid-column: span 4; }
+  .project-card:nth-child(4) { grid-column: span 5; }
+  .project-card:nth-child(5) { grid-column: span 3; }
+
+  .project-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(0.88) saturate(0.92);
+  }
+  .project-card:nth-child(1) .project-img,
+  .project-card:nth-child(2) .project-img { aspect-ratio: 16/11; }
+  .project-card:nth-child(3) .project-img { aspect-ratio: 3/4; }
+  .project-card:nth-child(4) .project-img { aspect-ratio: 4/5; }
+  .project-card:nth-child(5) .project-img { aspect-ratio: 3/4; }
+
+  .project-card:hover .project-img { transform: scale(1.06); }
+
+  .project-info {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15,10,6,0.85) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+  }
+  .project-card:hover .project-info { opacity: 1; }
+
+  .project-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--ivory);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    transform: translateY(8px);
+    transition: transform 0.5s ease;
+  }
+  .project-card:hover .project-name { transform: translateY(0); }
+
+  .project-city {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--linen);
+    opacity: 0.65;
+    margin-top: 6px;
+    transform: translateY(8px);
+    transition: transform 0.5s ease 0.04s;
+  }
+  .project-card:hover .project-city { transform: translateY(0); }
+
+  /* ─── SERVICES ─── */
+  #services {
+    padding: 140px 56px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 100px;
+  }
+
+  .services-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 3.8vw, 54px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    position: sticky;
+    top: 120px;
+    text-wrap: pretty;
+  }
+
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .service-item {
+    border-top: 1px solid var(--linen);
+    padding: 48px 0;
+  }
+  .service-item:last-child { border-bottom: 1px solid var(--linen); }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    color: var(--indigo);
+  }
+  .service-desc {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3A3028;
+    max-width: 520px;
+    text-wrap: pretty;
+  }
+
+  /* ─── PROCESS / WORKFLOW ─── */
+  #process {
+    padding: 130px 56px;
+    border-top: 1px solid var(--linen);
+  }
+  .process-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 72px;
+  }
+  .process-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 3.8vw, 54px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .process-header p {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3A3028;
+    text-wrap: pretty;
+    max-width: 460px;
+  }
+  .process-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--linen);
+    border-left: 1px solid var(--linen);
+  }
+  .process-week {
+    padding: 36px 28px 40px;
+    border-right: 1px solid var(--linen);
+    border-bottom: 1px solid var(--linen);
+  }
+  .week-label {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .week-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--indigo);
+    line-height: 1;
+    opacity: 0.18;
+    letter-spacing: -0.02em;
+  }
+  .week-title {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .process-step {
+    padding: 10px 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    border: 1px solid var(--linen);
+    line-height: 1.4;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .process-step:hover { border-color: var(--brass); }
+  .process-step.filled {
+    background: var(--indigo);
+    color: var(--ivory);
+    border-color: var(--indigo);
+  }
+  .process-step.terracotta {
+    background: var(--terracotta);
+    color: var(--ivory);
+    border-color: var(--terracotta);
+  }
+  .process-step-sub {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    opacity: 0.6;
+    margin-top: 3px;
+  }
+
+  /* ─── CRAFT ─── */
+  #craft {
+    background: var(--linen);
+    padding: 120px 56px;
+  }
+
+  .craft-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 72px;
+  }
+  .craft-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(38px, 4vw, 58px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .craft-header p {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3A3028;
+    text-wrap: pretty;
+  }
+
+  .craft-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .craft-item:nth-child(1) { grid-column: span 2; }
+
+  .craft-img-wrap {
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/4;
+  }
+  .craft-item:nth-child(1) .craft-img-wrap { aspect-ratio: 16/10; }
+
+  .craft-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+    filter: saturate(0.85);
+  }
+  .craft-item:hover .craft-img-wrap img { transform: scale(1.05); }
+
+  .craft-caption {
+    margin-top: 14px;
+  }
+  .craft-material {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--indigo);
+    margin-bottom: 4px;
+  }
+  .craft-note {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--stone);
+    text-transform: uppercase;
+  }
+
+  /* ─── PRESS ─── */
+  #press {
+    padding: 80px 56px;
+    border-top: 1px solid var(--linen);
+    border-bottom: 1px solid var(--linen);
+  }
+  .press-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .press-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone);
+    white-space: nowrap;
+    margin-right: 24px;
+  }
+  .press-rule {
+    width: 40px;
+    height: 1px;
+    background: var(--smoke);
+    flex-shrink: 0;
+  }
+  .press-logos {
+    display: flex;
+    align-items: center;
+    gap: 52px;
+    flex-wrap: wrap;
+  }
+  .press-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone);
+    opacity: 0.55;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+    cursor: default;
+  }
+  .press-logo:hover { opacity: 0.9; }
+  .press-logo span {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    font-weight: 400;
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  #testimonial {
+    padding: 160px 56px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .testimonial-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    line-height: 0.5;
+    color: var(--brass);
+    opacity: 0.35;
+    margin-bottom: 40px;
+    display: block;
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(26px, 3vw, 40px);
+    line-height: 1.45;
+    color: var(--indigo);
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+    margin-bottom: 40px;
+  }
+
+  .testimonial-author {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .testimonial-author strong {
+    color: var(--indigo);
+    font-weight: 500;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--indigo);
+    padding: 130px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+  }
+
+  .contact-left .section-label { color: var(--smoke); opacity: 0.5; }
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(38px, 4vw, 58px);
+    color: var(--ivory);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+  }
+  .contact-left p {
+    font-size: 14px;
+    line-height: 1.95;
+    color: var(--smoke);
+    opacity: 0.7;
+    max-width: 380px;
+    text-wrap: pretty;
+    margin-bottom: 48px;
+  }
+  .contact-detail {
+    margin-bottom: 24px;
+  }
+  .contact-detail-label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .contact-detail-value {
+    font-size: 14px;
+    color: var(--ivory);
+    opacity: 0.85;
+    line-height: 1.7;
+  }
+  .wa-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--ivory);
+    opacity: 0.65;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 24px;
+    text-decoration: none;
+    transition: opacity 0.3s, border-color 0.3s;
+  }
+  .wa-link:hover { opacity: 1; border-color: rgba(255,255,255,0.5); }
+  .wa-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    opacity: 0.55;
+    margin-bottom: 10px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: var(--ivory);
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 12px 0;
+    outline: none;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group input:focus,
+  .form-group textarea:focus { border-bottom-color: var(--brass); }
+  .form-group select {
+    cursor: pointer;
+    color: rgba(255,255,255,0.4);
+  }
+  .form-group select option { background: var(--indigo); color: var(--ivory); }
+  .form-group textarea { resize: none; height: 100px; }
+
+  .form-submit {
+    margin-top: 40px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.35);
+    color: var(--ivory);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 18px 44px;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+    width: 100%;
+  }
+  .form-submit:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.7);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--indigo);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 56px 56px 36px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-col-label {
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a,
+  .footer-col p {
+    font-size: 13px;
+    color: var(--ivory);
+    opacity: 0.45;
+    text-decoration: none;
+    transition: opacity 0.3s;
+    line-height: 1.7;
+  }
+  .footer-col ul li a:hover { opacity: 0.85; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo-small {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    opacity: 0.35;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .footer-logo-small .deva {
+    font-family: 'Mukta', sans-serif;
+    font-size: 12px;
+  }
+  .footer-copy {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--smoke);
+    opacity: 0.25;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-legal a {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    opacity: 0.25;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .footer-legal a:hover { opacity: 0.6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="light" id="main-nav">
+  <a href="index.html" class="nav-logo">
+    Rasa
+    <span class="deva">रस</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="projects.html">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div>
+      <h1 class="hero-headline">
+        The space<br>
+        <em>already knows</em><br>
+        what it wants.
+      </h1>
+    </div>
+    <div class="hero-aside">
+      <p>A boutique design studio rooted in Indian craft and contemporary sensibility. We work with those building homes of consequence.</p>
+      <div class="scroll-hint">
+        <span class="scroll-line"></span>
+        <span>Scroll</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="philosophy-text">
+    <span class="section-label">§ The Studio</span>
+    <h2>A point of view<br>rooted in place.</h2>
+    <div class="brass-rule"></div>
+    <p>We do not begin with a mood board. We begin with the land — its light, its grain, the way afternoon settles into a room differently in Delhi than in Bangalore. Rasa draws from the deep material traditions of the subcontinent: stone cut from Rajasthan, brass poured in Moradabad, linen woven in Maheshwar. These are not accents. They are the architecture of feeling.</p>
+    <p style="margin-top:20px; font-size:14.5px; line-height:1.95; color:#3A3028; max-width:480px; text-wrap:pretty;">Each project is a considered argument for how one ought to live — unhurried, sensory, specific to the person who inhabits it.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">18</div>
+        <div class="stat-label">Years of practice</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">74</div>
+        <div class="stat-label">Completed projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Cities active</div>
+      </div>
+    </div>
+  </div>
+  <div class="philosophy-image">
+    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=85&auto=format&fit=crop" alt="Studio detail — handwoven textile and brass vessel">
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <span class="section-label">§ Selected Work</span>
+      <h2>Each house,<br>a distinct argument.</h2>
+    </div>
+    <a href="projects.html">View all projects &rarr;</a>
+  </div>
+  <div class="projects-grid">
+
+    <a class="project-card" href="project-aurangzeb.html">
+      <img class="project-img"
+        src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85&auto=format&fit=crop"
+        alt="House on Aurangzeb Road">
+      <div class="project-info">
+        <div class="project-name">House on Aurangzeb Road</div>
+        <div class="project-city">New Delhi — Residential</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="project-bandra.html">
+      <img class="project-img"
+        src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop"
+        alt="Bandra Apartment">
+      <div class="project-info">
+        <div class="project-name">Bandra Apartment</div>
+        <div class="project-city">Mumbai — Residential</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="project-goa.html">
+      <img class="project-img"
+        src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop"
+        alt="The Goa Retreat">
+      <div class="project-info">
+        <div class="project-name">The Goa Retreat</div>
+        <div class="project-city">Goa — Villa</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="projects.html">
+      <img class="project-img"
+        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=85&auto=format&fit=crop"
+        alt="Indiranagar Garden House">
+      <div class="project-info">
+        <div class="project-name">Indiranagar Garden House</div>
+        <div class="project-city">Bengaluru — Residential</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="projects.html">
+      <img class="project-img"
+        src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop"
+        alt="Aravallis Farmhouse">
+      <div class="project-info">
+        <div class="project-name">Aravallis Farmhouse</div>
+        <div class="project-city">Gurugram — Farmhouse</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-left">
+    <span class="section-label">§ What We Do</span>
+    <h2>Considered from the ground up.</h2>
+  </div>
+  <div class="services-list">
+
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <div class="service-title">Residential Design</div>
+      <p class="service-desc">We take on a small number of residential commissions each year, working closely with the family over the full duration of the project. From spatial planning and material specification to art curation and soft furnishings — nothing is delegated without care. Our residential work ranges from urban apartments to landmark bungalows across Delhi NCR, Mumbai, Bengaluru, and Hyderabad.</p>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <div class="service-title">Farmhouse &amp; Villa Projects</div>
+      <p class="service-desc">The farmhouse sits at an interesting threshold — between city life and a certain freedom from it. We approach these projects with a particular attention to land, light, and the specific leisure they afford. Stone, water, shade, texture: the vocabulary here is elemental. Projects across the Aravallis, the Konkan coast, and the Nilgiris foothills.</p>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <div class="service-title">Hospitality</div>
+      <p class="service-desc">Select hospitality commissions — boutique hotels, private clubs, and owner-operated restaurants — where the brief rewards a genuine interior point of view. We are not production designers. We are brought in when the owner understands that atmosphere cannot be assembled from a catalogue.</p>
+    </div>
+
+    <div class="service-item">
+      <div class="service-num">04</div>
+      <div class="service-title">Bespoke Furniture &amp; Styling</div>
+      <p class="service-desc">Every significant project produces a handful of pieces made to no standard dimension. We work with craftspeople — woodworkers in Saharanpur, blacksmiths in Rajkot, weavers on the Deccan plateau — to realise furniture, lighting, and objects that exist nowhere else. Available as a standalone service for those furnishing a completed space.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS / WORKFLOW -->
+<section id="process">
+  <div class="process-header">
+    <div>
+      <span class="section-label">§ How We Work</span>
+      <h2>A deliberate process, not a production line.</h2>
+    </div>
+    <p>Every commission moves through four phases. The pace is unhurried by design — we have found that the quality of a finished interior is directly proportional to the quality of time given to each stage. Most residential projects run 12 to 24 months from first meeting to handover.</p>
+  </div>
+
+  <div class="process-timeline">
+
+    <div class="process-week">
+      <div class="week-label">
+        <span class="week-num">01</span>
+        <span class="week-title">Discovery</span>
+      </div>
+      <div class="process-steps">
+        <div class="process-step filled">
+          Briefing
+          <span class="process-step-sub">Site visits, client conversations</span>
+        </div>
+        <div class="process-step">
+          Space Analysis
+          <span class="process-step-sub">Orientation, light, proportion</span>
+        </div>
+        <div class="process-step">
+          Programme
+          <span class="process-step-sub">Room-by-room requirements</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-week">
+      <div class="week-label">
+        <span class="week-num">02</span>
+        <span class="week-title">Concept</span>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          Material Direction
+          <span class="process-step-sub">Palette, texture, craft vocabulary</span>
+        </div>
+        <div class="process-step terracotta">
+          Moodboard
+          <span class="process-step-sub">Presented for alignment</span>
+        </div>
+        <div class="process-step">
+          Spatial Narrative
+          <span class="process-step-sub">How the rooms speak to each other</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-week">
+      <div class="week-label">
+        <span class="week-num">03</span>
+        <span class="week-title">Design</span>
+      </div>
+      <div class="process-steps">
+        <div class="process-step filled">
+          Design Development
+          <span class="process-step-sub">Drawings, elevations, detail studies</span>
+        </div>
+        <div class="process-step">
+          Material Sourcing
+          <span class="process-step-sub">Artisan visits, sample approvals</span>
+        </div>
+        <div class="process-step">
+          Furniture Specification
+          <span class="process-step-sub">Bespoke commissions placed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-week">
+      <div class="week-label">
+        <span class="week-num">04</span>
+        <span class="week-title">Realisation</span>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          Site Supervision
+          <span class="process-step-sub">Weekly reviews, quality checks</span>
+        </div>
+        <div class="process-step">
+          Styling &amp; Dressing
+          <span class="process-step-sub">Art, objects, textiles placed</span>
+        </div>
+        <div class="process-step terracotta">
+          Handover
+          <span class="process-step-sub">The house becomes a home</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CRAFT & MATERIALS -->
+<section id="craft">
+  <div class="craft-header">
+    <div>
+      <span class="section-label">§ Material Intelligence</span>
+      <h2>The hand that made it<br>is still in the room.</h2>
+    </div>
+    <p>India has one of the most sophisticated craft traditions in the world. We treat this not as heritage to be preserved behind glass but as a living material vocabulary — one that improves every surface it touches and carries within it a quality of attention that manufactured goods cannot replicate.</p>
+  </div>
+  <div class="craft-grid">
+
+    <div class="craft-item">
+      <div class="craft-img-wrap">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop" alt="Kota stone flooring">
+      </div>
+      <div class="craft-caption">
+        <div class="craft-material">Kota Stone &amp; Lime Plaster</div>
+        <div class="craft-note">Rajasthan — flooring, cladding</div>
+      </div>
+    </div>
+
+    <div class="craft-item">
+      <div class="craft-img-wrap">
+        <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=700&q=85&auto=format&fit=crop" alt="Handwoven textiles">
+      </div>
+      <div class="craft-caption">
+        <div class="craft-material">Handwoven Linen &amp; Ikat</div>
+        <div class="craft-note">Maheshwar, Pochampally</div>
+      </div>
+    </div>
+
+    <div class="craft-item">
+      <div class="craft-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop" alt="Brass fixtures">
+      </div>
+      <div class="craft-caption">
+        <div class="craft-material">Poured Brass &amp; Patinated Bronze</div>
+        <div class="craft-note">Moradabad — hardware, lighting</div>
+      </div>
+    </div>
+
+    <div class="craft-item">
+      <div class="craft-img-wrap">
+        <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=700&q=85&auto=format&fit=crop" alt="Terrazzo">
+      </div>
+      <div class="craft-caption">
+        <div class="craft-material">Terrazzo &amp; Shahabad Stone</div>
+        <div class="craft-note">Karnataka — bespoke tile work</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRESS -->
+<section id="press">
+  <div class="press-inner">
+    <span class="press-label">As seen in</span>
+    <span class="press-rule"></span>
+    <div class="press-logos">
+      <span class="press-logo">AD <span>India</span></span>
+      <span class="press-logo">Elle Décor <span>India</span></span>
+      <span class="press-logo">Vogue <span>India</span></span>
+      <span class="press-logo">Beautiful Homes</span>
+      <span class="press-logo">Goodhomes</span>
+      <span class="press-logo">Platform <span>Magazine</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial">
+  <span class="testimonial-mark">&ldquo;</span>
+  <blockquote class="testimonial-quote">
+    We had lived in this house for two years before working with Rasa. When they finished, it felt like the house had finally begun to breathe — as if it had been waiting for someone to understand what it was trying to say.
+  </blockquote>
+  <p class="testimonial-author">
+    <strong>Priya &amp; Karan Mehta</strong> &ensp;&mdash;&ensp; House on Aurangzeb Road, New Delhi
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left">
+    <span class="section-label">§ Begin a Conversation</span>
+    <h2>Every project starts with a conversation.</h2>
+    <p>We accept a limited number of commissions each year. If your project merits a considered response, we will arrange a call within three working days. We work Pan-India with select international projects.</p>
+
+    <div class="contact-details">
+      <div class="contact-detail">
+        <span class="contact-detail-label">Studio</span>
+        <div class="contact-detail-value">Rasa Design Studio<br>Mehrauli Village, New Delhi — 110030</div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <div class="contact-detail-value">hello@rasastudio.in</div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">New Projects</span>
+        <div class="contact-detail-value">commissions@rasastudio.in</div>
+      </div>
+    </div>
+
+    <a href="https://wa.me/919810000000" class="wa-link" target="_blank" rel="noopener">
+      <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      WhatsApp — Quick inquiry
+    </a>
+  </div>
+
+  <div class="contact-form">
+    <form onsubmit="return false;">
+      <div class="form-group">
+        <label>Your name</label>
+        <input type="text" placeholder="As you'd like to be addressed">
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" placeholder="For correspondence">
+      </div>
+      <div class="form-group">
+        <label>Project type</label>
+        <select>
+          <option value="" disabled selected>Select a category</option>
+          <option>Residential — Urban Home</option>
+          <option>Farmhouse or Villa</option>
+          <option>Hospitality</option>
+          <option>Bespoke Furniture</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>City or location</label>
+        <input type="text" placeholder="Where is the project situated?">
+      </div>
+      <div class="form-group">
+        <label>Tell us about the project</label>
+        <textarea placeholder="A few sentences is enough. We will write back with questions."></textarea>
+      </div>
+      <button class="form-submit" type="submit">Send inquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-col">
+      <span class="footer-col-label">Studio</span>
+      <p>Mehrauli Village<br>New Delhi — 110030</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Navigation</span>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Work</a></li>
+        <li><a href="studio.html">Studio</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Contact</span>
+      <ul>
+        <li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li>
+        <li><a href="mailto:commissions@rasastudio.in">commissions@rasastudio.in</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Follow</span>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Pinterest</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">
+      Rasa <span class="deva">रस</span>
+    </div>
+    <span class="footer-copy">© 2026 Rasa Design Studio. All rights reserved.</span>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // Nav: transitions from transparent light to frosted-glass dark after hero
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    const heroH = document.getElementById('hero').offsetHeight;
+    if (window.scrollY > heroH - 80) {
+      nav.classList.remove('light');
+      nav.classList.add('dark');
+    } else {
+      nav.classList.add('light');
+      nav.classList.remove('dark');
+    }
+  }, { passive: true });
+
+  // Hero: subtle scale-in on load + parallax on scroll
+  const heroBg = document.getElementById('heroBg');
+  heroBg.classList.add('loaded');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY < window.innerHeight) {
+      heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.22}px)`;
+    }
+  }, { passive: true });
+
+  // Scroll fade-in for key elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.service-item, .craft-item, .project-card, .philosophy-image').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.75s ease, transform 0.75s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

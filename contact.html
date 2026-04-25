@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — RASA Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .contact-hero {
+    min-height: 52vh;
+    padding: 180px 56px 80px;
+    background: var(--indigo);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .contact-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&q=70&auto=format&fit=crop') center / cover;
+    opacity: 0.12;
+  }
+  .contact-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 6.5vw, 96px);
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    color: var(--ivory);
+    position: relative; z-index: 1;
+  }
+  .contact-hero-right {
+    position: relative; z-index: 1;
+    align-self: end;
+  }
+  .contact-hero-right p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--smoke);
+    opacity: 0.7;
+    max-width: 420px;
+    text-wrap: pretty;
+  }
+
+  .inquiry-process {
+    background: var(--indigo);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 60px 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .ip-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    color: var(--brass);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .ip-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--ivory);
+    margin-bottom: 8px;
+  }
+  .ip-desc {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--smoke);
+    opacity: 0.5;
+    text-wrap: pretty;
+  }
+
+  .contact-main {
+    padding: 100px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .contact-details-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 50px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+    text-wrap: pretty;
+  }
+  .detail-group {
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--linen);
+  }
+  .detail-group:last-of-type { border-bottom: none; }
+  .detail-group-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .detail-group-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--indigo);
+    letter-spacing: 0.01em;
+  }
+  .detail-group-value a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--linen);
+    transition: border-color 0.3s;
+  }
+  .detail-group-value a:hover { border-color: var(--brass); }
+  .detail-note {
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--stone);
+    opacity: 0.7;
+    margin-top: 10px;
+    text-wrap: pretty;
+    max-width: 360px;
+  }
+  .wa-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #1B4D2E;
+    color: #fff;
+    padding: 16px 28px;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    transition: background 0.3s;
+  }
+  .wa-cta:hover { background: #14402A; }
+  .wa-icon { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+
+  .office-map-placeholder {
+    margin-top: 36px;
+    background: var(--linen);
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--smoke);
+    position: relative;
+    overflow: hidden;
+  }
+  .map-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    opacity: 0.5;
+    text-align: center;
+    line-height: 2;
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    box-shadow: 0 0 0 8px rgba(184,92,56,0.15);
+  }
+
+  .contact-form-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(30px, 3vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    text-wrap: pretty;
+  }
+  .form-note {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: #3A3028;
+    margin-bottom: 40px;
+    text-wrap: pretty;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+  .form-group { margin-bottom: 32px; }
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--stone);
+    opacity: 0.65;
+    margin-bottom: 10px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--linen);
+    color: var(--indigo);
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 10px 0;
+    outline: none;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--stone); opacity: 0.4; }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-bottom-color: var(--brass); }
+  .form-group select { cursor: pointer; color: var(--stone); }
+  .form-group textarea { resize: none; height: 120px; }
+  .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .form-check input { width: auto; border-bottom: none; margin-top: 3px; }
+  .form-check label {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--stone);
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  .form-submit {
+    width: 100%;
+    background: var(--indigo);
+    border: none;
+    color: var(--ivory);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .form-submit:hover { background: var(--terracotta); }
+
+  .contact-cities {
+    background: var(--linen);
+    padding: 80px 56px;
+    border-top: 1px solid var(--smoke);
+  }
+  .contact-cities h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+    color: var(--indigo);
+  }
+  .cities-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+  .city-card {
+    padding: 24px;
+    border: 1px solid var(--smoke);
+    background: var(--ivory);
+  }
+  .city-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--brass);
+    margin-bottom: 14px;
+    opacity: 0.7;
+  }
+  .city-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--indigo);
+    margin-bottom: 6px;
+  }
+  .city-projects {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--stone);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav light" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta" style="opacity:1;">Inquire</a>
+</nav>
+
+<section class="contact-hero">
+  <h1>Begin<br>a conversation.</h1>
+  <div class="contact-hero-right">
+    <p>We accept a limited number of new commissions each year. If your project interests us — and if our approach interests you — we will arrange a call within three working days of receiving your inquiry.</p>
+  </div>
+</section>
+
+<div class="inquiry-process">
+  <div class="ip-step">
+    <span class="ip-num">01</span>
+    <div class="ip-title">You write to us</div>
+    <p class="ip-desc">A brief description of the project, its location, and when you intend to begin. No decks required.</p>
+  </div>
+  <div class="ip-step">
+    <span class="ip-num">02</span>
+    <div class="ip-title">We respond in three days</div>
+    <p class="ip-desc">If the project is a possible fit, we will write back with a few questions and propose a call.</p>
+  </div>
+  <div class="ip-step">
+    <span class="ip-num">03</span>
+    <div class="ip-title">A first meeting</div>
+    <p class="ip-desc">An hour-long conversation — in person in Delhi or Bengaluru, or by video call. No charge and no obligation.</p>
+  </div>
+  <div class="ip-step">
+    <span class="ip-num">04</span>
+    <div class="ip-title">A formal proposal</div>
+    <p class="ip-desc">If we are aligned, we present a scope and fee proposal within two weeks of the initial meeting.</p>
+  </div>
+</div>
+
+<section class="contact-main">
+  <div class="contact-details-block">
+    <span class="section-label">§ Find Us</span>
+    <h2>Studio &amp; contact.</h2>
+
+    <div class="detail-group">
+      <span class="detail-group-label">Studio Address</span>
+      <div class="detail-group-value">Rasa Design Studio<br>Plot 14, Mehrauli Village<br>New Delhi — 110030</div>
+      <p class="detail-note">Our studio is in the Mehrauli Archaeological Park. Visits by appointment only — we are a working studio, not a showroom.</p>
+    </div>
+
+    <div class="detail-group">
+      <span class="detail-group-label">General Inquiries</span>
+      <div class="detail-group-value"><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></div>
+    </div>
+
+    <div class="detail-group">
+      <span class="detail-group-label">New Commissions</span>
+      <div class="detail-group-value"><a href="mailto:commissions@rasastudio.in">commissions@rasastudio.in</a></div>
+      <p class="detail-note">For project inquiries above ₹3 crore. Please include a brief description and your preferred timeline.</p>
+    </div>
+
+    <div class="detail-group">
+      <span class="detail-group-label">WhatsApp</span>
+      <div class="detail-group-value">+91 98100 00000</div>
+      <p class="detail-note">For existing clients and urgent site matters. Not the right channel for new inquiries — please use email first.</p>
+      <br>
+      <a href="https://wa.me/919810000000" class="wa-cta" target="_blank" rel="noopener">
+        <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Open on WhatsApp
+      </a>
+    </div>
+
+    <div class="office-map-placeholder">
+      <div>
+        <div class="map-pin"></div>
+        <p class="map-label">Mehrauli Village<br>New Delhi</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-block">
+    <span class="section-label">§ Project Inquiry</span>
+    <h2>Tell us about your project.</h2>
+    <p class="form-note">We read every inquiry personally. A few sentences is enough — we will ask the right questions ourselves. The more specific you can be about your timeline and location, the more useful our response will be.</p>
+
+    <form onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" placeholder="—">
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" placeholder="—">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" placeholder="For correspondence">
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp (optional)</label>
+        <input type="tel" placeholder="+91">
+      </div>
+      <div class="form-group">
+        <label>Project type</label>
+        <select>
+          <option value="" disabled selected>Select a category</option>
+          <option>Residential — Urban Home</option>
+          <option>Farmhouse or Villa</option>
+          <option>Hospitality</option>
+          <option>Bespoke Furniture Commission</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>City / Location</label>
+          <input type="text" placeholder="Where is the project?">
+        </div>
+        <div class="form-group">
+          <label>Intended start</label>
+          <input type="text" placeholder="e.g. Q3 2026">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Approximate project budget</label>
+        <select>
+          <option value="" disabled selected>Select a range</option>
+          <option>₹1 – 3 crore</option>
+          <option>₹3 – 7 crore</option>
+          <option>₹7 – 15 crore</option>
+          <option>₹15 crore +</option>
+          <option>Not yet determined</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell us about the project</label>
+        <textarea placeholder="A paragraph is sufficient. Tell us the space, the city, and what you are hoping for."></textarea>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="consent">
+        <label for="consent">I understand that Rasa accepts a limited number of commissions each year and that an inquiry does not guarantee a commission.</label>
+      </div>
+      <button class="form-submit" type="submit">Send inquiry →</button>
+    </form>
+  </div>
+</section>
+
+<section class="contact-cities">
+  <span class="section-label">§ Where We Work</span>
+  <h3>Pan-India, with select international commissions.</h3>
+  <div class="cities-grid">
+    <div class="city-card">
+      <div class="city-dot"></div>
+      <div class="city-name">New Delhi</div>
+      <div class="city-projects">Studio base · 28 projects</div>
+    </div>
+    <div class="city-card">
+      <div class="city-dot"></div>
+      <div class="city-name">Mumbai</div>
+      <div class="city-projects">Active · 16 projects</div>
+    </div>
+    <div class="city-card">
+      <div class="city-dot"></div>
+      <div class="city-name">Bengaluru</div>
+      <div class="city-projects">Active · 12 projects</div>
+    </div>
+    <div class="city-card">
+      <div class="city-dot"></div>
+      <div class="city-name">Hyderabad</div>
+      <div class="city-projects">Active · 9 projects</div>
+    </div>
+    <div class="city-card">
+      <div class="city-dot"></div>
+      <div class="city-name">International</div>
+      <div class="city-projects">Select projects · UAE, UK</div>
+    </div>
+  </div>
+</section>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col"><span class="footer-col-label">Studio</span><p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p></div>
+    <div class="footer-col"><span class="footer-col-label">Navigation</span><ul><li><a href="index.html">Home</a></li><li><a href="projects.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="journal.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Contact</span><ul><li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li><li><a href="mailto:commissions@rasastudio.in">commissions@rasastudio.in</a></li><li><a href="https://wa.me/919810000000">WhatsApp</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Follow</span><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Pinterest</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal"><li><a href="#">Privacy</a></li></ul>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    const atTop = window.scrollY < 60;
+    nav.classList.toggle('light', atTop);
+    nav.style.background = atTop ? 'transparent' : 'rgba(243,237,226,0.92)';
+    nav.style.backdropFilter = atTop ? '' : 'blur(12px)';
+    nav.style.color = atTop ? 'var(--ivory)' : 'var(--indigo)';
+  }, { passive: true });
+</script>
+</body>
+</html>

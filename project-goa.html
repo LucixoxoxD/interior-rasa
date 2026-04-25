@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Goa Retreat — RASA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .project-hero { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+  .project-hero-img {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=88&auto=format&fit=crop') center 50% / cover no-repeat;
+    transform: scale(1.04); transition: transform 9s ease-out;
+  }
+  .project-hero-img.loaded { transform: scale(1); }
+  .project-hero-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,12,8,0.82) 0%, rgba(5,12,8,0.08) 55%, transparent 100%); }
+  .project-hero-content { position: relative; z-index: 2; padding: 0 56px 64px; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: flex-end; gap: 48px; }
+  .project-hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px, 5.5vw, 80px); line-height: 1.0; color: var(--ivory); letter-spacing: -0.015em; }
+  .project-hero-meta { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; padding-bottom: 6px; }
+  .hero-tag { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ivory); opacity: 0.5; }
+  .hero-year { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--ivory); opacity: 0.45; }
+
+  .stats-bar { border-bottom: 1px solid var(--linen); padding: 40px 56px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .stat-block-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--stone); margin-bottom: 8px; display: block; }
+  .stat-block-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--indigo); }
+
+  .project-intro { padding: 96px 56px; display: grid; grid-template-columns: 200px 1fr 1fr; gap: 60px; align-items: start; }
+  .project-intro-headline { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(30px, 3vw, 44px); line-height: 1.2; letter-spacing: -0.01em; text-wrap: pretty; }
+  .project-intro-body { font-size: 15px; line-height: 1.95; color: #3A3028; text-wrap: pretty; }
+  .project-intro-body p + p { margin-top: 18px; }
+
+  .gallery-full { width: 100%; aspect-ratio: 16/8; overflow: hidden; }
+  .gallery-full img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.92); transition: transform 6s ease; }
+  .gallery-full:hover img { transform: scale(1.03); }
+
+  .gallery-three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+  .gallery-three img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; filter: saturate(0.88); }
+
+  .gallery-portrait-wide { display: grid; grid-template-columns: 2fr 3fr; gap: 4px; align-items: end; }
+  .gallery-portrait-wide img { width: 100%; object-fit: cover; display: block; filter: saturate(0.88); }
+  .gallery-portrait-wide img:first-child { aspect-ratio: 3/4; }
+  .gallery-portrait-wide img:last-child { aspect-ratio: 16/10; }
+
+  .gallery-caption { padding: 20px 56px; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--linen); margin-bottom: 4px; }
+  .caption-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--stone); }
+  .caption-num { font-size: 10px; letter-spacing: 0.2em; color: var(--stone); opacity: 0.45; }
+
+  .project-pullquote { padding: 96px 180px; text-align: center; border-top: 1px solid var(--linen); border-bottom: 1px solid var(--linen); }
+  .project-pullquote blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(24px, 2.8vw, 38px); line-height: 1.48; color: var(--indigo); letter-spacing: -0.01em; text-wrap: pretty; margin-bottom: 28px; }
+  .project-pullquote cite { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); font-style: normal; }
+
+  .project-materials { padding: 96px 56px; background: var(--linen); display: grid; grid-template-columns: 300px 1fr; gap: 80px; align-items: start; }
+  .materials-left h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 36px; line-height: 1.2; margin-top: 12px; }
+  .materials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; }
+  .mat-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; color: var(--indigo); border-bottom: 1px solid var(--smoke); padding-bottom: 10px; margin-bottom: 6px; }
+  .mat-item-origin { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin-top: 6px; }
+  .mat-item-note { font-size: 13.5px; line-height: 1.75; color: #3A3028; margin-top: 8px; text-wrap: pretty; }
+
+  .next-project { display: flex; background: var(--indigo); padding: 80px 56px; text-decoration: none; color: var(--ivory); justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+  .next-project::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=70&auto=format&fit=crop') center / cover; opacity: 0; transition: opacity 0.6s; }
+  .next-project:hover::before { opacity: 0.18; }
+  .next-label { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.45; margin-bottom: 12px; display: block; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px, 4vw, 56px); line-height: 1.05; letter-spacing: -0.01em; position: relative; z-index: 1; }
+  .next-arrow { font-size: 48px; font-weight: 200; opacity: 0.4; position: relative; z-index: 1; transition: transform 0.4s, opacity 0.4s; }
+  .next-project:hover .next-arrow { transform: translateX(12px); opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav light" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<div class="project-hero">
+  <div class="project-hero-img" id="heroBg"></div>
+  <div class="project-hero-grad"></div>
+  <div class="project-hero-content">
+    <h1 class="project-hero-title">The Goa<br>Retreat</h1>
+    <div class="project-hero-meta">
+      <span class="hero-tag">Villa · Goa</span>
+      <span class="hero-year">2022</span>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block"><span class="stat-block-label">Location</span><span class="stat-block-value">Assagao, North Goa</span></div>
+  <div class="stat-block"><span class="stat-block-label">Type</span><span class="stat-block-value">Private Villa</span></div>
+  <div class="stat-block"><span class="stat-block-label">Built-up Area</span><span class="stat-block-value">6,100 sq ft</span></div>
+  <div class="stat-block"><span class="stat-block-label">Duration</span><span class="stat-block-value">14 months</span></div>
+  <div class="stat-block"><span class="stat-block-label">Completed</span><span class="stat-block-value">December 2022</span></div>
+</div>
+
+<section class="project-intro">
+  <div><span class="section-label">§ The Brief</span></div>
+  <h2 class="project-intro-headline">A house that makes the silence feel designed.</h2>
+  <div class="project-intro-body">
+    <p>The site is a colonial-era Portuguese house in Assagao, set within a mature cashew orchard. The clients — a Mumbai family seeking a retreat from the city — did not want renovation in any typical sense. They wanted the house to feel as though it had always been theirs, without the signs of effort.</p>
+    <p>We preserved the original laterite stone walls and terracotta tile roof. New interventions — a pool deck in Kota stone, a library pavilion at the garden edge, a screened dining terrace — were designed to read as extensions of the colonial logic rather than additions to it.</p>
+    <p>The interiors draw on the Goan vernacular: oyster-shell windows refitted in teak, lime-washed walls in a shade drawn from the soil of the site, furniture in caned rattan and reclaimed teak. The house is designed to be opened entirely to the garden by 6 AM and closed to afternoon sun by 1 PM — a rhythm the family has made part of daily life.</p>
+  </div>
+</section>
+
+<div class="gallery-full fade-up">
+  <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=1800&q=88&auto=format&fit=crop" alt="Garden terrace">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Garden terrace — Kota stone deck, laterite boundary wall, cashew orchard beyond</span>
+  <span class="caption-num">01 / 06</span>
+</div>
+
+<div class="gallery-three fade-up">
+  <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=85&auto=format&fit=crop" alt="Living room">
+  <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop" alt="Bedroom">
+  <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Library">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Living room, guest bedroom, garden library pavilion</span>
+  <span class="caption-num">02–04 / 06</span>
+</div>
+
+<div class="gallery-portrait-wide fade-up">
+  <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=700&q=85&auto=format&fit=crop" alt="Detail">
+  <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85&auto=format&fit=crop" alt="Dining terrace">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Rattan detail; screened dining terrace at dusk</span>
+  <span class="caption-num">05–06 / 06</span>
+</div>
+
+<div class="project-pullquote">
+  <blockquote>"We asked them to make a house that felt inevitable. That is precisely what they did. Every detail is considered; nothing announces itself. The house simply is."</blockquote>
+  <cite>Meera &amp; Aditya Kapoor, Assagao, Goa</cite>
+</div>
+
+<section class="project-materials">
+  <div class="materials-left">
+    <span class="section-label">§ Materials Used</span>
+    <h2>The land gave us everything we needed.</h2>
+  </div>
+  <div class="materials-grid">
+    <div class="mat-item">
+      <div class="mat-item-name">Laterite Stone</div>
+      <div class="mat-item-origin">On-site, Goa — Walls &amp; Boundaries</div>
+      <p class="mat-item-note">The original colonial structure. Retained in full, repointed with lime mortar. Gains a deep ochre patina through the monsoon season.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Kota Stone</div>
+      <div class="mat-item-origin">Rajasthan — Pool Deck &amp; Terrace</div>
+      <p class="mat-item-note">Honed finish for the pool deck; a rougher bush-hammered surface for the garden paths. Both in the dark grey-green variety.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Natural Rattan &amp; Cane</div>
+      <div class="mat-item-origin">Sourced Goa — All Furniture</div>
+      <p class="mat-item-note">All seating and case furniture in hand-woven cane on teak frames. Made by a workshop in Mapusa that has operated since the 1960s.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Lime Wash, Site-Pigmented</div>
+      <div class="mat-item-origin">Applied on-site — All Interior Walls</div>
+      <p class="mat-item-note">Three rounds of lime wash, the final coat tinted with raw ochre sourced from a nearby laterite quarry. No two walls read exactly the same.</p>
+    </div>
+  </div>
+</section>
+
+<a class="next-project" href="projects.html">
+  <div>
+    <span class="next-label">Back to All Projects</span>
+    <div class="next-title">View Full<br><em style="font-style:italic; opacity:0.55; font-size:0.75em;">Portfolio</em></div>
+  </div>
+  <span class="next-arrow">→</span>
+</a>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col"><span class="footer-col-label">Studio</span><p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p></div>
+    <div class="footer-col"><span class="footer-col-label">Navigation</span><ul><li><a href="index.html">Home</a></li><li><a href="projects.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="journal.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Contact</span><ul><li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li><li><a href="https://wa.me/919810000000">WhatsApp</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Press</span><ul><li><a href="#">AD India — Feb 2023</a></li><li><a href="#">Beautiful Homes — 2023</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal"><li><a href="#">Privacy</a></li></ul>
+  </div>
+</footer>
+
+<script>
+  const heroBg = document.getElementById('heroBg');
+  setTimeout(() => heroBg.classList.add('loaded'), 100);
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY;
+    if (s < window.innerHeight) heroBg.style.transform = `scale(1) translateY(${s * 0.2}px)`;
+    const nav = document.getElementById('main-nav');
+    if (s > window.innerHeight - 80) { nav.classList.remove('light'); nav.classList.add('dark'); }
+    else { nav.classList.add('light'); nav.classList.remove('dark'); }
+  }, { passive: true });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

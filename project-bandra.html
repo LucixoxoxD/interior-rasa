@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bandra Apartment — RASA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .project-hero { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+  .project-hero-img {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1800&q=88&auto=format&fit=crop') center 40% / cover no-repeat;
+    transform: scale(1.04); transition: transform 9s ease-out;
+  }
+  .project-hero-img.loaded { transform: scale(1); }
+  .project-hero-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,8,5,0.78) 0%, rgba(10,8,5,0.1) 55%, transparent 100%); }
+  .project-hero-content { position: relative; z-index: 2; padding: 0 56px 64px; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: flex-end; gap: 48px; }
+  .project-hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px, 5.5vw, 80px); line-height: 1.0; color: var(--ivory); letter-spacing: -0.015em; }
+  .project-hero-meta { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; padding-bottom: 6px; }
+  .hero-tag { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ivory); opacity: 0.5; }
+  .hero-year { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--ivory); opacity: 0.45; letter-spacing: 0.08em; }
+
+  .stats-bar { border-bottom: 1px solid var(--linen); padding: 40px 56px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .stat-block-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--stone); margin-bottom: 8px; display: block; }
+  .stat-block-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 18px; color: var(--indigo); }
+
+  .project-intro { padding: 96px 56px; display: grid; grid-template-columns: 200px 1fr 1fr; gap: 60px; align-items: start; }
+  .project-intro-headline { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(30px, 3vw, 44px); line-height: 1.2; letter-spacing: -0.01em; text-wrap: pretty; }
+  .project-intro-body { font-size: 15px; line-height: 1.95; color: #3A3028; text-wrap: pretty; }
+  .project-intro-body p + p { margin-top: 18px; }
+
+  .gallery-full { width: 100%; aspect-ratio: 16/8; overflow: hidden; }
+  .gallery-full img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.9); transition: transform 6s ease; }
+  .gallery-full:hover img { transform: scale(1.03); }
+
+  .gallery-two { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .gallery-two img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; filter: saturate(0.88); }
+
+  .gallery-skewed { display: grid; grid-template-columns: 3fr 2fr; gap: 4px; }
+  .gallery-skewed img { width: 100%; object-fit: cover; display: block; filter: saturate(0.88); }
+  .gallery-skewed img:first-child { aspect-ratio: 4/3; }
+  .gallery-skewed img:last-child { aspect-ratio: 3/4; }
+
+  .gallery-caption { padding: 20px 56px; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--linen); margin-bottom: 4px; }
+  .caption-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--stone); }
+  .caption-num { font-size: 10px; letter-spacing: 0.2em; color: var(--stone); opacity: 0.45; }
+
+  .project-pullquote { padding: 96px 180px; text-align: center; border-top: 1px solid var(--linen); border-bottom: 1px solid var(--linen); }
+  .project-pullquote blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(24px, 2.8vw, 38px); line-height: 1.48; color: var(--indigo); letter-spacing: -0.01em; text-wrap: pretty; margin-bottom: 28px; }
+  .project-pullquote cite { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); font-style: normal; }
+
+  .project-materials { padding: 96px 56px; background: var(--linen); display: grid; grid-template-columns: 300px 1fr; gap: 80px; align-items: start; }
+  .materials-left h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 36px; line-height: 1.2; margin-top: 12px; }
+  .materials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 48px; }
+  .mat-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20px; color: var(--indigo); margin-bottom: 6px; border-bottom: 1px solid var(--smoke); padding-bottom: 10px; }
+  .mat-item-origin { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin-top: 6px; }
+  .mat-item-note { font-size: 13.5px; line-height: 1.75; color: #3A3028; margin-top: 8px; text-wrap: pretty; }
+
+  .next-project { display: flex; background: var(--indigo); padding: 80px 56px; text-decoration: none; color: var(--ivory); justify-content: space-between; align-items: center; position: relative; overflow: hidden; }
+  .next-project::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1400&q=70&auto=format&fit=crop') center / cover; opacity: 0; transition: opacity 0.6s; }
+  .next-project:hover::before { opacity: 0.18; }
+  .next-label { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; opacity: 0.45; margin-bottom: 12px; display: block; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px, 4vw, 56px); line-height: 1.05; letter-spacing: -0.01em; position: relative; z-index: 1; }
+  .next-arrow { font-size: 48px; font-weight: 200; opacity: 0.4; position: relative; z-index: 1; transition: transform 0.4s, opacity 0.4s; }
+  .next-project:hover .next-arrow { transform: translateX(12px); opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav light" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<div class="project-hero">
+  <div class="project-hero-img" id="heroBg"></div>
+  <div class="project-hero-grad"></div>
+  <div class="project-hero-content">
+    <h1 class="project-hero-title">Bandra<br>Apartment</h1>
+    <div class="project-hero-meta">
+      <span class="hero-tag">Residential · Mumbai</span>
+      <span class="hero-year">2023</span>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block"><span class="stat-block-label">Location</span><span class="stat-block-value">Bandra West, Mumbai</span></div>
+  <div class="stat-block"><span class="stat-block-label">Type</span><span class="stat-block-value">High-rise Apartment</span></div>
+  <div class="stat-block"><span class="stat-block-label">Built-up Area</span><span class="stat-block-value">3,200 sq ft</span></div>
+  <div class="stat-block"><span class="stat-block-label">Duration</span><span class="stat-block-value">11 months</span></div>
+  <div class="stat-block"><span class="stat-block-label">Completed</span><span class="stat-block-value">November 2023</span></div>
+</div>
+
+<section class="project-intro">
+  <div><span class="section-label">§ The Brief</span></div>
+  <h2 class="project-intro-headline">The sea is outside. The interior needed to hold its own.</h2>
+  <div class="project-intro-body">
+    <p>The apartment occupies an upper floor of a tower in Bandra West, with unobstructed views of the Arabian Sea to the west. The temptation in such a space is to subordinate everything to the view — to make the interior a frame. We did the opposite.</p>
+    <p>The clients — a couple with an art collection assembled over fifteen years of travel — wanted a home that could stand in conversation with the sea, not simply defer to it. Rooms with character. A living room that earns the right to be turned away from the window.</p>
+    <p>We introduced deep terracotta plaster walls in the study, a custom blackened brass library wall, and flooring in reclaimed teak with a matte finish. The art collection — including two large Atul Dodiya works and a commissioned textile by a Kutch weaver — was integrated into the spatial sequence from the beginning, not added at the end.</p>
+  </div>
+</section>
+
+<div class="gallery-full fade-up">
+  <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800&q=88&auto=format&fit=crop" alt="Living room">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Living room — reclaimed teak floor, terracotta plaster, sea beyond</span>
+  <span class="caption-num">01 / 05</span>
+</div>
+
+<div class="gallery-two fade-up">
+  <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&q=85&auto=format&fit=crop" alt="Study">
+  <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=85&auto=format&fit=crop" alt="Library">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Study with deep terracotta walls; brass library wall, west elevation</span>
+  <span class="caption-num">02–03 / 05</span>
+</div>
+
+<div class="gallery-skewed fade-up">
+  <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85&auto=format&fit=crop" alt="Bedroom">
+  <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=700&q=85&auto=format&fit=crop" alt="Detail">
+</div>
+<div class="gallery-caption">
+  <span class="caption-text">Primary bedroom; Kutch textile detail above headboard</span>
+  <span class="caption-num">04–05 / 05</span>
+</div>
+
+<div class="project-pullquote">
+  <blockquote>"Rasa understood immediately that the view was not the point — the view was a given. What they gave us was a home with rooms worth being in regardless of what is outside."</blockquote>
+  <cite>Anjali &amp; Rohit Singhania, Bandra West, Mumbai</cite>
+</div>
+
+<section class="project-materials">
+  <div class="materials-left">
+    <span class="section-label">§ Materials Used</span>
+    <h2>Sea salt and terracotta.</h2>
+  </div>
+  <div class="materials-grid">
+    <div class="mat-item">
+      <div class="mat-item-name">Reclaimed Burmese Teak</div>
+      <div class="mat-item-origin">Sourced Mumbai — Flooring</div>
+      <p class="mat-item-note">Salvaged teak from a colonial-era building in Fort. Matte oiled finish. Gains character with each monsoon season.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Terracotta Plaster</div>
+      <div class="mat-item-origin">Applied on-site — Study &amp; Dining</div>
+      <p class="mat-item-note">A warm ochre-red pigmented lime plaster, applied in two coats and sealed with beeswax. Deepens slightly in the evening light.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Blackened Brass</div>
+      <div class="mat-item-origin">Moradabad — Library Wall System</div>
+      <p class="mat-item-note">Custom shelf brackets and library ladders in oxidised brass. A material that is simultaneously industrial and precious.</p>
+    </div>
+    <div class="mat-item">
+      <div class="mat-item-name">Kutch Woven Textile</div>
+      <div class="mat-item-origin">Gujarat — Commission, Bedroom</div>
+      <p class="mat-item-note">A large-format commission from a weaver in Bhuj. Natural indigo and madder dyes on cotton warp. Will take years to fully settle.</p>
+    </div>
+  </div>
+</section>
+
+<a class="next-project" href="project-goa.html">
+  <div>
+    <span class="next-label">Next Project</span>
+    <div class="next-title">The Goa Retreat<br><em style="font-style:italic; opacity:0.55; font-size:0.75em;">Goa</em></div>
+  </div>
+  <span class="next-arrow">→</span>
+</a>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col"><span class="footer-col-label">Studio</span><p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p></div>
+    <div class="footer-col"><span class="footer-col-label">Navigation</span><ul><li><a href="index.html">Home</a></li><li><a href="projects.html">Work</a></li><li><a href="studio.html">Studio</a></li><li><a href="journal.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Contact</span><ul><li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li><li><a href="https://wa.me/919810000000">WhatsApp</a></li></ul></div>
+    <div class="footer-col"><span class="footer-col-label">Press</span><ul><li><a href="#">Vogue India — Jan 2024</a></li><li><a href="#">Platform Magazine — 2024</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal"><li><a href="#">Privacy</a></li></ul>
+  </div>
+</footer>
+
+<script>
+  const heroBg = document.getElementById('heroBg');
+  setTimeout(() => heroBg.classList.add('loaded'), 100);
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY;
+    if (s < window.innerHeight) heroBg.style.transform = `scale(1) translateY(${s * 0.2}px)`;
+    const nav = document.getElementById('main-nav');
+    if (s > window.innerHeight - 80) { nav.classList.remove('light'); nav.classList.add('dark'); }
+    else { nav.classList.add('light'); nav.classList.remove('dark'); }
+  }, { passive: true });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

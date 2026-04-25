@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — RASA Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mukta:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/rasa.css">
+<style>
+  .page-hero {
+    padding: 180px 56px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    border-bottom: 1px solid var(--linen);
+  }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .page-hero p {
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: #3A3028;
+    max-width: 420px;
+    text-wrap: pretty;
+    align-self: end;
+  }
+
+  .filter-bar {
+    padding: 32px 56px;
+    border-bottom: 1px solid var(--linen);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter-label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-right: 16px;
+  }
+  .filter-btn {
+    background: none;
+    border: 1px solid var(--linen);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    padding: 8px 20px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .filter-btn:hover { opacity: 1; border-color: var(--indigo); }
+  .filter-btn.active {
+    background: var(--indigo);
+    color: var(--ivory);
+    border-color: var(--indigo);
+    opacity: 1;
+  }
+
+  .projects-index {
+    padding: 64px 56px 120px;
+  }
+  .projects-index-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px 20px;
+  }
+
+  .pi-card:nth-child(1)  { grid-column: span 7; }
+  .pi-card:nth-child(2)  { grid-column: span 5; }
+  .pi-card:nth-child(3)  { grid-column: span 4; }
+  .pi-card:nth-child(4)  { grid-column: span 4; }
+  .pi-card:nth-child(5)  { grid-column: span 4; }
+  .pi-card:nth-child(6)  { grid-column: span 5; }
+  .pi-card:nth-child(7)  { grid-column: span 7; }
+  .pi-card:nth-child(8)  { grid-column: span 6; }
+  .pi-card:nth-child(9)  { grid-column: span 6; }
+  .pi-card:nth-child(10) { grid-column: span 4; }
+
+  .pi-card {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .pi-card-img {
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--linen);
+  }
+  .pi-card:nth-child(1) .pi-card-img,
+  .pi-card:nth-child(7) .pi-card-img { aspect-ratio: 16/10; }
+  .pi-card:nth-child(2) .pi-card-img,
+  .pi-card:nth-child(6) .pi-card-img { aspect-ratio: 3/4; }
+
+  .pi-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9) saturate(0.88);
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
+  }
+  .pi-card:hover .pi-card-img img {
+    transform: scale(1.05);
+    filter: brightness(0.95) saturate(0.95);
+  }
+
+  .pi-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15,10,6,0.7) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+  }
+  .pi-card:hover .pi-card-overlay { opacity: 1; }
+  .overlay-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--ivory);
+    transform: translateY(6px);
+    transition: transform 0.45s;
+  }
+  .pi-card:hover .overlay-name { transform: translateY(0); }
+  .overlay-city {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--linen);
+    opacity: 0.65;
+    margin-top: 5px;
+    transform: translateY(6px);
+    transition: transform 0.45s 0.04s;
+  }
+  .pi-card:hover .overlay-city { transform: translateY(0); }
+
+  .pi-card-meta {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .pi-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+  }
+  .pi-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    opacity: 0.65;
+  }
+  .pi-year {
+    font-size: 11px;
+    color: var(--stone);
+    opacity: 0.5;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="rasa-nav always-dark" id="main-nav">
+  <a href="index.html" class="nav-logo">Rasa <span class="deva">रस</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Work</a></li>
+    <li><a href="studio.html">Studio</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Inquire</a>
+</nav>
+
+<main>
+  <div class="page-hero">
+    <h1>Selected<br><em style="font-style:italic; color:var(--stone);">Work</em></h1>
+    <p>Seventy-four completed projects across India and select international commissions. Each one begins with a conversation and ends with a house that could not have been built for anyone else.</p>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter by</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="residential">Residential</button>
+    <button class="filter-btn" data-filter="farmhouse">Farmhouse &amp; Villa</button>
+    <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+    <button class="filter-btn" data-filter="bespoke">Bespoke</button>
+  </div>
+
+  <section class="projects-index">
+    <div class="projects-index-grid" id="projectsGrid">
+
+      <a class="pi-card fade-up" href="project-aurangzeb.html" data-category="residential">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85&auto=format&fit=crop" alt="House on Aurangzeb Road">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">House on Aurangzeb Road</div>
+            <div class="overlay-city">New Delhi — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">House on Aurangzeb Road</div>
+            <div class="pi-year">New Delhi · 2023</div>
+          </div>
+          <span class="pi-tag">Residential</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="project-bandra.html" data-category="residential">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop" alt="Bandra Apartment">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Bandra Apartment</div>
+            <div class="overlay-city">Mumbai — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Bandra Apartment</div>
+            <div class="pi-year">Mumbai · 2023</div>
+          </div>
+          <span class="pi-tag">Residential</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="project-goa.html" data-category="farmhouse">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=700&q=85&auto=format&fit=crop" alt="Goa Retreat">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">The Goa Retreat</div>
+            <div class="overlay-city">Goa — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">The Goa Retreat</div>
+            <div class="pi-year">Goa · 2022</div>
+          </div>
+          <span class="pi-tag">Villa</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="residential">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop" alt="Indiranagar Garden House">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Indiranagar Garden House</div>
+            <div class="overlay-city">Bengaluru — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Indiranagar Garden House</div>
+            <div class="pi-year">Bengaluru · 2022</div>
+          </div>
+          <span class="pi-tag">Residential</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="farmhouse">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Aravallis Farmhouse">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Aravallis Farmhouse</div>
+            <div class="overlay-city">Gurugram — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Aravallis Farmhouse</div>
+            <div class="pi-year">Gurugram · 2022</div>
+          </div>
+          <span class="pi-tag">Farmhouse</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="hospitality">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85&auto=format&fit=crop" alt="Chambers at Lodhi">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Chambers at Lodhi</div>
+            <div class="overlay-city">New Delhi — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Chambers at Lodhi</div>
+            <div class="pi-year">New Delhi · 2021</div>
+          </div>
+          <span class="pi-tag">Hospitality</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="residential">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85&auto=format&fit=crop" alt="Jubilee Hills Residence">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Jubilee Hills Residence</div>
+            <div class="overlay-city">Hyderabad — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Jubilee Hills Residence</div>
+            <div class="pi-year">Hyderabad · 2021</div>
+          </div>
+          <span class="pi-tag">Residential</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="bespoke">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=900&q=85&auto=format&fit=crop" alt="The Loom Archive">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">The Loom Archive</div>
+            <div class="overlay-city">Mehrauli — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">The Loom Archive</div>
+            <div class="pi-year">Delhi · 2020</div>
+          </div>
+          <span class="pi-tag">Bespoke</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="farmhouse">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=900&q=85&auto=format&fit=crop" alt="Konkan Coast House">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Konkan Coast House</div>
+            <div class="overlay-city">Alibag — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Konkan Coast House</div>
+            <div class="pi-year">Alibag · 2020</div>
+          </div>
+          <span class="pi-tag">Villa</span>
+        </div>
+      </a>
+
+      <a class="pi-card fade-up" href="#" data-category="hospitality">
+        <div class="pi-card-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop" alt="Narayan Club">
+          <div class="pi-card-overlay">
+            <div class="overlay-name">Narayan Club</div>
+            <div class="overlay-city">Bengaluru — View project →</div>
+          </div>
+        </div>
+        <div class="pi-card-meta">
+          <div>
+            <div class="pi-name">Narayan Club</div>
+            <div class="pi-year">Bengaluru · 2019</div>
+          </div>
+          <span class="pi-tag">Hospitality</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+</main>
+
+<footer class="rasa-footer">
+  <div class="footer-top">
+    <div class="footer-col">
+      <span class="footer-col-label">Studio</span>
+      <p>Rasa Design Studio<br>Mehrauli Village<br>New Delhi — 110030</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Navigation</span>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Work</a></li>
+        <li><a href="studio.html">Studio</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Contact</span>
+      <ul>
+        <li><a href="mailto:hello@rasastudio.in">hello@rasastudio.in</a></li>
+        <li><a href="mailto:commissions@rasastudio.in">commissions@rasastudio.in</a></li>
+        <li><a href="https://wa.me/919810000000">WhatsApp</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Follow</span>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Pinterest</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo-small">Rasa <span class="deva">रस</span></div>
+    <span class="footer-copy">© 2026 Rasa Design Studio</span>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.pi-card');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const match = f === 'all' || c.dataset.category === f;
+        c.style.opacity = match ? '1' : '0.2';
+        c.style.pointerEvents = match ? '' : 'none';
+        c.style.transition = 'opacity 0.4s';
+      });
+    });
+  });
+
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 40 ? 'rgba(243,237,226,0.92)' : 'transparent';
+    nav.style.backdropFilter = window.scrollY > 40 ? 'blur(12px)' : '';
+  }, { passive: true });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
