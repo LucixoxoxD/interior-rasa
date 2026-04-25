@@ -178,6 +178,37 @@
     letter-spacing: 0.08em;
     margin-top: 3px;
   }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .page-hero { padding: 160px 40px 64px; }
+    .filter-bar { padding: 28px 40px; }
+    .projects-index { padding: 56px 40px 100px; }
+  }
+  @media (max-width: 768px) {
+    .page-hero { grid-template-columns: 1fr; gap: 32px; padding: 140px 32px 56px; }
+    .filter-bar { padding: 20px 32px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 6px; }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-label { flex-shrink: 0; }
+    .filter-btn { flex-shrink: 0; min-height: 44px; }
+    .projects-index { padding: 48px 32px 80px; }
+    .projects-index-grid { grid-template-columns: 1fr 1fr; gap: 20px 16px; }
+    .pi-card:nth-child(n) { grid-column: span 1; }
+    .pi-card .pi-card-img { aspect-ratio: 4/3 !important; }
+  }
+  @media (max-width: 640px) {
+    .page-hero { padding: 110px 20px 48px; }
+    .filter-bar { padding: 16px 20px; }
+    .projects-index { padding: 40px 20px 64px; }
+    .projects-index-grid { grid-template-columns: 1fr; gap: 28px; }
+    .pi-card-overlay { opacity: 1; }
+    .overlay-name, .overlay-city { transform: none; }
+  }
+  @media (max-width: 480px) {
+    .page-hero { padding: 96px 16px 40px; }
+    .filter-bar { padding: 14px 16px; }
+    .projects-index { padding: 32px 16px 56px; }
+  }
 </style>
 </head>
 <body>
@@ -191,7 +222,19 @@
     <li><a href="journal.html">Journal</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Inquire</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu"><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-nav">
+    <a href="index.html">Home</a>
+    <a href="projects.html" class="active">Work</a>
+    <a href="studio.html">Studio</a>
+    <a href="journal.html">Journal</a>
+    <a href="contact.html">Inquire</a>
+  </nav>
+  <div class="mobile-menu-footer"><span>Rasa Design Studio</span><span>New Delhi, 2026</span></div>
+</div>
 
 <main>
   <div class="page-hero">
@@ -213,7 +256,7 @@
 
       <a class="pi-card fade-up" href="project-aurangzeb.html" data-category="residential">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85&auto=format&fit=crop" alt="House on Aurangzeb Road">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=85&auto=format&fit=crop" alt="House on Aurangzeb Road">
           <div class="pi-card-overlay">
             <div class="overlay-name">House on Aurangzeb Road</div>
             <div class="overlay-city">New Delhi — View project →</div>
@@ -230,7 +273,7 @@
 
       <a class="pi-card fade-up" href="project-bandra.html" data-category="residential">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop" alt="Bandra Apartment">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop" alt="Bandra Apartment">
           <div class="pi-card-overlay">
             <div class="overlay-name">Bandra Apartment</div>
             <div class="overlay-city">Mumbai — View project →</div>
@@ -247,7 +290,7 @@
 
       <a class="pi-card fade-up" href="project-goa.html" data-category="farmhouse">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=700&q=85&auto=format&fit=crop" alt="Goa Retreat">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=700&q=85&auto=format&fit=crop" alt="Goa Retreat">
           <div class="pi-card-overlay">
             <div class="overlay-name">The Goa Retreat</div>
             <div class="overlay-city">Goa — View project →</div>
@@ -264,7 +307,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="residential">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop" alt="Indiranagar Garden House">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=700&q=85&auto=format&fit=crop" alt="Indiranagar Garden House">
           <div class="pi-card-overlay">
             <div class="overlay-name">Indiranagar Garden House</div>
             <div class="overlay-city">Bengaluru — View project →</div>
@@ -281,7 +324,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="farmhouse">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Aravallis Farmhouse">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Aravallis Farmhouse">
           <div class="pi-card-overlay">
             <div class="overlay-name">Aravallis Farmhouse</div>
             <div class="overlay-city">Gurugram — View project →</div>
@@ -298,7 +341,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="hospitality">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85&auto=format&fit=crop" alt="Chambers at Lodhi">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85&auto=format&fit=crop" alt="Chambers at Lodhi">
           <div class="pi-card-overlay">
             <div class="overlay-name">Chambers at Lodhi</div>
             <div class="overlay-city">New Delhi — View project →</div>
@@ -315,7 +358,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="residential">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85&auto=format&fit=crop" alt="Jubilee Hills Residence">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=85&auto=format&fit=crop" alt="Jubilee Hills Residence">
           <div class="pi-card-overlay">
             <div class="overlay-name">Jubilee Hills Residence</div>
             <div class="overlay-city">Hyderabad — View project →</div>
@@ -332,7 +375,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="bespoke">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=900&q=85&auto=format&fit=crop" alt="The Loom Archive">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=900&q=85&auto=format&fit=crop" alt="The Loom Archive">
           <div class="pi-card-overlay">
             <div class="overlay-name">The Loom Archive</div>
             <div class="overlay-city">Mehrauli — View project →</div>
@@ -349,7 +392,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="farmhouse">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=900&q=85&auto=format&fit=crop" alt="Konkan Coast House">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1615529328331-f8917597711f?w=900&q=85&auto=format&fit=crop" alt="Konkan Coast House">
           <div class="pi-card-overlay">
             <div class="overlay-name">Konkan Coast House</div>
             <div class="overlay-city">Alibag — View project →</div>
@@ -366,7 +409,7 @@
 
       <a class="pi-card fade-up" href="#" data-category="hospitality">
         <div class="pi-card-img">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop" alt="Narayan Club">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&auto=format&fit=crop" alt="Narayan Club">
           <div class="pi-card-overlay">
             <div class="overlay-name">Narayan Club</div>
             <div class="overlay-city">Bengaluru — View project →</div>
@@ -455,6 +498,26 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      const opening = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      nav.classList.toggle('menu-open', opening);
+      document.body.style.overflow = opening ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      nav.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }));
+  }
 </script>
 </body>
 </html>
+
