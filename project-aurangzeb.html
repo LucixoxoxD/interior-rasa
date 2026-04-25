@@ -170,6 +170,56 @@
   .next-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px, 4vw, 56px); line-height: 1.05; letter-spacing: -0.01em; position: relative; z-index: 1; }
   .next-arrow { font-size: 48px; font-weight: 200; opacity: 0.4; position: relative; z-index: 1; transition: transform 0.4s, opacity 0.4s; }
   .next-project:hover .next-arrow { transform: translateX(12px); opacity: 0.8; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .project-hero-content { padding: 0 40px 56px; }
+    .stats-bar { padding: 32px 40px; }
+    .project-intro { padding: 80px 40px; }
+    .gallery-caption { padding: 16px 40px; }
+    .project-pullquote { padding: 80px 100px; }
+    .project-materials { padding: 80px 40px; }
+    .next-project { padding: 64px 40px; }
+  }
+  @media (max-width: 768px) {
+    .project-hero { height: 85vh; min-height: 500px; }
+    .project-hero-content { grid-template-columns: 1fr; padding: 0 32px 48px; gap: 12px; }
+    .project-hero-meta { align-items: flex-start; flex-direction: row; gap: 20px; }
+    .stats-bar { grid-template-columns: repeat(3, 1fr); padding: 28px 32px; gap: 20px 16px; }
+    .project-intro { grid-template-columns: 1fr; gap: 28px; padding: 64px 32px; }
+    .gallery-caption { padding: 14px 32px; }
+    .project-pullquote { padding: 64px 32px; }
+    .project-materials { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px; }
+    .materials-grid { grid-template-columns: 1fr 1fr; gap: 24px 32px; }
+    .next-project { padding: 56px 32px; }
+  }
+  @media (max-width: 640px) {
+    .project-hero { height: 85vh; min-height: 480px; }
+    .project-hero-content { padding: 0 20px 40px; }
+    .project-hero-title { font-size: clamp(36px, 10vw, 56px); }
+    .stats-bar { grid-template-columns: 1fr 1fr; padding: 24px 20px; gap: 20px 16px; }
+    .project-intro { padding: 52px 20px; gap: 20px; }
+    .gallery-two { grid-template-columns: 1fr; gap: 4px; }
+    .gallery-two img { aspect-ratio: 4/3 !important; }
+    .gallery-two.offset img { aspect-ratio: 4/3 !important; }
+    .gallery-editorial { grid-template-columns: 1fr; gap: 4px; }
+    .gallery-editorial img { aspect-ratio: 4/3 !important; }
+    .gallery-caption { padding: 12px 20px; flex-direction: column; gap: 4px; }
+    .project-pullquote { padding: 56px 20px; }
+    .project-materials { padding: 52px 20px; gap: 32px; }
+    .materials-grid { grid-template-columns: 1fr; gap: 24px; }
+    .next-project { padding: 48px 20px; flex-direction: column; align-items: flex-start; gap: 20px; }
+    .next-arrow { font-size: 36px; }
+  }
+  @media (max-width: 480px) {
+    .project-hero-content { padding: 0 16px 36px; }
+    .stats-bar { padding: 20px 16px; }
+    .project-intro { padding: 48px 16px; }
+    .gallery-caption { padding: 10px 16px; }
+    .project-pullquote { padding: 48px 16px; }
+    .project-materials { padding: 48px 16px; }
+    .next-project { padding: 40px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -183,7 +233,19 @@
     <li><a href="journal.html">Journal</a></li>
   </ul>
   <a href="contact.html" class="nav-cta">Inquire</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu"><span></span><span></span></button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-nav">
+    <a href="index.html">Home</a>
+    <a href="projects.html" class="active">Work</a>
+    <a href="studio.html">Studio</a>
+    <a href="journal.html">Journal</a>
+    <a href="contact.html">Inquire</a>
+  </nav>
+  <div class="mobile-menu-footer"><span>Rasa Design Studio</span><span>New Delhi, 2026</span></div>
+</div>
 
 <div class="project-hero">
   <div class="project-hero-img" id="heroBg"></div>
@@ -233,7 +295,7 @@
 </section>
 
 <div class="gallery-full fade-up">
-  <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1800&q=88&auto=format&fit=crop" alt="Living room">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1800&q=88&auto=format&fit=crop" alt="Living room">
 </div>
 <div class="gallery-caption">
   <span class="caption-text">Living room, west wing — afternoon light through sandstone jali</span>
@@ -241,8 +303,8 @@
 </div>
 
 <div class="gallery-two fade-up">
-  <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop" alt="Study">
-  <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&q=85&auto=format&fit=crop" alt="Detail">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=85&auto=format&fit=crop" alt="Study">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&q=85&auto=format&fit=crop" alt="Detail">
 </div>
 <div class="gallery-caption">
   <span class="caption-text">Study and verandah corridor detail</span>
@@ -250,8 +312,8 @@
 </div>
 
 <div class="gallery-editorial fade-up">
-  <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=85&auto=format&fit=crop" alt="Dining">
-  <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Brass detail">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=85&auto=format&fit=crop" alt="Dining">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=85&auto=format&fit=crop" alt="Brass detail">
 </div>
 <div class="gallery-caption">
   <span class="caption-text">Dining room; brass vessel on carved console</span>
@@ -259,7 +321,7 @@
 </div>
 
 <div class="gallery-full fade-up">
-  <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1800&q=88&auto=format&fit=crop" alt="Bedroom">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1800&q=88&auto=format&fit=crop" alt="Bedroom">
 </div>
 <div class="gallery-caption">
   <span class="caption-text">Primary bedroom — handwoven linen headboard, Dholpur stone floor</span>
@@ -336,6 +398,26 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      const opening = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      document.getElementById('main-nav').classList.toggle('menu-open', opening);
+      document.body.style.overflow = opening ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.getElementById('main-nav').classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }));
+  }
 </script>
 </body>
 </html>
+
